@@ -1,0 +1,129 @@
+
+Teoría complementaria sobre Programación Orientada a Objetos
+Programación Orientada a objetos
+
+
+La Programación Orientada a Objetos (POO) es un paradigma de programación 
+que busca modelar el entorno como objetos que interactúan entre si.
+
+Los objetos generalmente poseen dos características:
+( Atributos - Métodos )
+
+Los atributos son las cualidades o características propias de un objeto
+, es decir, qué puede almacenar ese objeto.  Por ejemplo un automóvil tiene:
+( Marca - Modelo - Color - Peso )
+Cantidad de puertas ...etc
+
+Los métodos son las acciones o formas en las que podremos interactuar con un objeto. Continuando con el ejemplo del automóvil podríamos llevar acciones como:
+( Acelerar - Frenar - Encender - Apagar - Cambiar de marcha )
+
+...
+
+Al momento de diseñar un objeto, se debe tener claro qué atributos y métodos deberá tener. Hay que considerar qué problema queremos resolver para entender qué acciones y características nos ayudarán a resolver un problema en cuestión. Por ejemplo, es distinto diseñar un automóvil para una venta de vehículos que uno para un videojuego. Las acciones frenar, encender, apagar, posiblemente no sean útiles para el primer caso pero si para el segundo. Mientras que atributos como la velocidad, aceleración, marcha actual, está encendido. Son atributos que nos funcionan para el segundo caso y no el primero.
+
+En Python, cuando se diseña un objeto se hace mediante la declaración de una clase. Una clase es simplemente el modelo, la base, a partir de la cuál comenzaremos a crear instancias o miembros específicos de la clase. La clase debe tener un nombre significativo y debe utilizar el estándar CamelCase. La primera letra de la palabra debe ir en mayúscula y si la clase se compone de varias palabras, las primeras letras de las siguientes palabras deberán ir en mayúsculas por ejemplo:
+
+Automovil
+
+Persona
+
+MazoDeCartas
+
+Dentro de esta definiremos los atributos y métodos que contendrá el objeto.
+
+Creación de objetos
+
+Creación de clases (class)
+
+class Carta: #Declaración de una clase, usando la palabra resevada class
+Note los dos puntos al final, esto indica que se abrirá un bloque de código.
+
+Debido a que los objetos usualmente tienen atributos, es importante tener un lugar para poder definir los atributos. Típicamente este lugar se llama constructor de clase, este se hace mediante un método especial llamado init
+
+Creación de variables de instancia (uso de self)
+
+self.numero = 8 #Se crea un atributo numero usando la sintaxis self.X
+  self.palo = "Corazones" #Se crea e inicializa el atributo palo
+Creación del método constructor de clase llamado init:
+
+En el siguiente ejemplo se crean las variables que se utilizarán como atributos:
+
+def __init__(self, numeroParametro, simboloParametro):
+        # Los elementos con sangría a este nivel serán parte del método __init__
+        self.numero
+        self.simbolo
+Como probablemente vayamos a crear muchas instancias de nuestro objeto, es deseable asignarle un valor a cada atributo dependiendo de cada instancia. Estos valores deben ser enviados como parámetros, y se envían fuera del diseño de la clase, es decir desde la instancia. Los parámetros se comportan como variables locales a un método, es decir sólo se definen y funcionan dentro del método que estamos creando.
+
+En el siguiente ejemplo se crean e inicializan las variables
+
+# Constructor de clase, la acción __init__ es llamada sólo una vez
+    # Cuando se crea una nueva instancia de la clase
+    # Entre los paréntesis se definen las variables que se desean recibir al
+    # Crear un objeto y usarlas para dar valor a los atributos
+    def __init__(self, numeroParametro, simboloParametro):
+        # Los elementos con sangría a este nivel serán parte del método __init__
+        self.numero = numeroParametro  # Se crea un atributo numero usando la sintaxis self.X
+        self.simbolo = simboloParametro  # Se crea e inicializa el atributo simbolo
+Los métodos inician siempre con la palabra reservada def y finalizan con : que indican que comienza un bloque de código. Cada vez que se crea un bloque, su contenido debe ir indentado (sea 4 espacios a la derecha o un tab). Los métodos especiales que reconoce python inician y finalizan con doble guión bajo (__) como el caso del init. Entre los paréntesis se agregan los parámetros, estos son los valores que se espera que reciba el método para funcionar de forma correcta. En python, los métodos en las clases llevan como primer parámetro self. Esto lo utiliza Python para poder referirse a los atributos u otros métodos que se encuentran en la clase, de esta forma podemos acceder a cualquier método o atributo de clase desde cualquier método en nuestra clase.
+
+Los atributos y las variables funcionan de forma distinta, al declarar una variable no se utiliza palabra self, esto significa que la variable sólo existirá dentro de un contexto específico como un método y no se podrá utilizar la variable fuera de este, cosa que podemos hacer con los atributos de clase
+
+Creación de métodos en clases (acciones def nombreMetodo(parámetros)) básicas
+
+def sumar(self, valor1, valor2):
+    resultado = valor1 + valor2
+    return resultado
+Generación de instancias ( variable = NombreDeClase())
+
+carta1 = Carta() #Ejemplo sin parámetros
+carta2 = Carta(7,'Corazones') #Ejemplo con parámetros
+Código fuente de la clase Carta:¶
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+ 
+class Carta:  # Declaración de una clase, usando la palabra reservada class
+ 
+    # Los elementos indentados (con sangría a este nivel) serán parte de la clase
+ 
+    # Constructor de clase, la acción __init__ es llamada sólo una vez
+    # Cuando se crea una nueva instancia de la clase
+    # Entre los paréntesis se definen las variables que se desean recibir al
+    # Crear un objeto y usarlas para dar valor a los atributos
+    def __init__(self, numero_parametro, simbolo_parametro):
+        # Los elementos con sangría a este nivel serán parte del método __init__
+        self.numero = numero_parametro  # Se crea un atributo numero usando la sintaxis self.X
+        self.simbolo = simbolo_parametro  # Se crea e inicializa el atributo simbolo
+ 
+    def imprimir(self):
+        # Recuerde que para concatenar (unir) Strings, todos los elementos
+        # Deben ser del mismo tipo por lo que convertimos el numero en un String
+        contenido = str(self.numero) + " de " + self.simbolo
+        print(contenido)
+ 
+    def asignar_numero(self, numero):
+        self.numero = numero
+ 
+ 
+# Creacion de instancias de la clase Carta
+# Note que esto no es parte de la clase, por tanto la indentación (Sangría)
+# Vuelve a la izquierda
+if (__name__ == "__main__"):
+    simbolo1 = "Espadas"
+    a = 3
+    carta1 = Carta(a, simbolo1)
+    carta1.imprimir()
+ 
+    carta2 = Carta(7, "Corazones")
+    carta2.imprimir()
+    # Para una instancia existente, se pueden sobreescribir los valores de los atributos:
+    carta2.asignarNumero(12)
+    carta2.imprimir()
+ 
+    carta2.asignarNumero(13)
+    carta2.imprimir()
+ 
+    carta2.asignarNumero(11)
+    carta2.imprimir()
+ 
+    carta2.asignarNumero(1)
+    carta2.imprimir()

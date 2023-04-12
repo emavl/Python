@@ -1,0 +1,21 @@
+
+Una de las caracteristicas de python es que es un lenguaje de proposito general
+desde juegos hasta web IA 
+
+La segunda caract. es que es un lenguaje de alto nivel.
+los de bjo nivel son lenguajes con una estructura diferente a la 
+del lenguaje natural, y los lenguajes de alto nivel son los que mas 
+se parece al lenguaje natural, por ende mientras mas bajo sea el lenguajes
+mas dificil va a ser de entenderlo cuando lo leamos.
+
+la tercera caract. es que es muy facil de aprender
+
+Python es un lenjuaje dinamico porque, al momento de caear variables, éste se va a dar cuenta 
+que tipo de dato es y lo define automaticamente, a diferencia de otros 
+lenjuajes que debo definir el tipo de dato, por eso es un lenjuage estatico.
+
+Por que debo usar python.
+porque es mas facil de definir y eficiente a la hora programar
+- es un lenguaje que podemos mezclar con otro tipo de lenguajes
+- es un lenguaje multiparadigma, se puede transladar a diferentes OS.
+
