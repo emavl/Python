@@ -1,4 +1,4 @@
-# Inicioamos con python !  
+# Iniciamos con python !!  
 """ Comentamos multiples lineas 
     donde todo lo que coloquemos dentro
     sera visto por nosotros ! ! 

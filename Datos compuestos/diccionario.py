@@ -1,6 +1,6 @@
 # declaramos   clave y valor, las claves no pueden repetirse
-# a diferencia del valor que si se puede repetir
 
+# a diferencia del valor que si se puede repetir
 diccionario = { 'c1' : 'valor1', 'c2':'valor2'}
 print(type(diccionario))
 print("\n")

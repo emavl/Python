@@ -1,9 +1,9 @@
 # Uso basico de la funcion print.
 
 print("\nUtilizamos todo tipo de datos" ,end=" ")
-print("unimos siguiente linea con el \"end=\" ")
+print("unimos siguiente linea con el \"end =\" ")
 print()
-print("python" ,"es" ,"temendo" ,sep='-')
+print("python" ,"es" ,"temendo" ,sep=' ')
 
 nombre = "juan"
 apellido = "perez"
