@@ -14,3 +14,7 @@
 # C. Nombre del votante más joven que votó a Nacho.
 # D. Nombre de cada participante y porcentaje de los votos qué recibió.
 # E. El nombre del participante que ganó el reality (El que tiene más votos)
+
+from bibliotecas_python.inputs import *
+
+print("arranco")

@@ -10,7 +10,7 @@ apellido = "perez"
 print()
 print("Utilizando el format")
 print("nombre {} y appellido es {} ".format(nombre.title(), apellido.title()))
-
+print(f"nombre {nombre.title()} y apellido es {apellido.title()} ")
 import datetime
 
 ahora = datetime.datetime.now()

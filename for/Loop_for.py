@@ -1,3 +1,8 @@
+import os
+
+os.system("cls")
+print(" -------- -- L i s t a s -- --------- \n")
+
 lista = ['a','b','c']
 
 for letra in lista:
@@ -21,6 +26,7 @@ print("─"*30)
 numeros = [1,2,3,4,5]
 miValor = 0
 
+print("\nImprimo numero in numeros ")
 for numero in numeros:
     miValor = miValor + numero
     # si lo tabulo cambia y quedaría dentro del for
@@ -33,55 +39,56 @@ print("─"*30)
 
 # puedo o no declarar la variable  y funcionaría igual
 # ej: palabra = python
-
+print("\nLetras que encuentro en la palabra python")
 for letra in "python":
     print(letra)
 
 print("─"*30)
-# al igual que si quiesiera utilizar una lista dentro del for
+print(" al igual que si quiesiera utilizar una lista dentro del for")
 
 for listas in [1,2,3]:
     print(listas)
 
 print("─"*30)
 # o bien varias listas u objetos
-
+print("\nImprimo varias listas:")
 for objeto in [[1,2],[3,4],[5,6]]:
     print(objeto)
 
 print("─"*30)
 
-# creando 2 variables como ( a y b )
-# podemos imprimir las variables por separado
-# donde (a) se caga con la informacion 1 : (1,3,5)
-# y (b) se carga con la informacion 2 : ( 2,4,6)
-# así iteramos una lista dentro de otra
+print(""" creando 2 variables como ( a y b )
+podemos imprimir las variables por separado
+donde (a) se caga con la informacion 1 : (1,3,5)
+y (b) se carga con la informacion 2 : ( 2,4,6)
+así iteramos una lista dentro de otra""")
 for a,b in [[1,2],[3,4],[5,6]]:
     print(a)
     print(b)
 
 print("─"*45)
+print(" -------- -- D i c c i o n a r i o s -- --------- \n")
 print("de esta forma imprimimos las claves solamente")
-dic = {'clave1': 'a', 'clave2':'b', 'clave3': 'c'}
+diccionario = {'Nombre': 'Emanuel', 'Apellido':'vidal', 'edad': '36'}
 
-for item in dic:
+for item in diccionario:
     print(item)
 
 print("\nPara imprimir de forma completa")
 
-for item in dic.items():
+for item in diccionario.items():
     print(item)
 
 print("\nPara imprimir los valores de la lista")
 
-for item in dic.values():
+for item in diccionario.values():
     print(item)
 
 print("\nOtra manera distinta de "
       "imprimir los valores de la lista")
 
-for a,b in dic.items():
-    print(a,b)
+for a,b in diccionario.items():
+    print(f"{a}:^10,{b}")
 
 print("─"*45)
 

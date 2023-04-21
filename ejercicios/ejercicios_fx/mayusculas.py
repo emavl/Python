@@ -2,7 +2,7 @@ nombre = input("\nIngrese su nombre ")
 
 
 def mayusNombre(nombre):
-    return nombre.upper()
+    return nombre.format(nombre.title())
 
 
 print(mayusNombre(nombre))

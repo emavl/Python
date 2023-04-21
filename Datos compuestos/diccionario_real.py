@@ -1,3 +1,7 @@
+import os
+
+os.system("cls")
+
 # ahora llevamos un caso a la vida real
 # a la hora de utilizar datos
 cliente = {'nombre': (input("ingrese un nombre ")), 'apellido': (input("ingrese un apellido "))}
@@ -14,3 +18,19 @@ print(dic['c2'][1])
 print("mostrandome el numero 20 ")
 print("si queremos ver un diccionario dentro de otro")
 print(dic['c3']['s2'])
+
+
+for elemento in cliente:
+    print(elemento, cliente[elemento])
+    
+    
+# Clase de UTN
+
+# array asociativo
+
+# Alumno = [
+#     "nombre":"emanuel",
+#     "apellid":"vidal",
+#     "direccion":"Carabelas 124",
+#     "email":"ema.vidal@yahoo.com",
+# ]    

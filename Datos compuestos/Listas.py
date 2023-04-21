@@ -2,9 +2,9 @@
 # pero podemos hacer mas cosas que una array que es inamobible.
 # esto es un dato compuesto y de diferentes tipos de dato a diferencia de los arrays que son del mismo tipo.
 
+import os
 
-
-
+os.system("cls")
 
 
 
@@ -64,3 +64,26 @@ print("\n podemos también copiar con el .copy y borrar con .clear datos de la l
 # para borrar la lista completa.
 my_list.clear()
 
+print("\nPara meter lista dentro de otra")
+# Para meter una lista dentro de otra
+lista1 = [1, 2, 3]
+lista2 = [4, 5, 6]
+lista_mayor = []
+
+print("\nusanado append()")
+# Usando append()
+lista1.append(lista2)
+print(lista1)  # [1, 2, 3, [4, 5, 6]]
+
+lista1.remove(lista2)
+print("\nusanado += ")
+# Usando +=
+lista1 += [lista2]
+print(lista1)  # [1, 2, 3, [4, 5, 6]]
+lista1.remove(lista2)
+
+print("\nusanado .apend de lista 1 y 2 para incorporarla en una gral.")
+lista_mayor.append(lista1)
+lista_mayor.append(lista2)
+print(lista_mayor)
+print("\n\n")
