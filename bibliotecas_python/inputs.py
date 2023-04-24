@@ -31,13 +31,13 @@ def pedir_texto(mensaje: str, mensaje_error: str) -> str:
 def pedir_numero_min_max(mensaje, mensaje_error, min, max):
 
     while True:
-      try:
-          num = int(input(mensaje))
-          if (num > min and num < max):
-              raise ValueError
-          break
-      except ValueError:
-          print(mensaje_error)
+        try:
+            num = int(input(mensaje))
+            if (num > min and num < max):
+                raise ValueError
+            break
+        except ValueError:
+            print(mensaje_error)
 
     return num
 
@@ -45,22 +45,22 @@ def pedir_numero_min_max(mensaje, mensaje_error, min, max):
 def pedir_numero(mensaje, mensaje_error):
 
     while True:
-      try:
-          num = input(mensaje)
-          if (num.isalpha):
-              num = int(num)
-              raise ValueError
-          break
-      except ValueError:
-          print(mensaje_error)
+        try:
+            num = input(mensaje)
+            if (num.isalpha):
+                num = int(num)
+                raise ValueError
+            break
+        except ValueError:
+            print(mensaje_error)
 
     return num
 
 
 def limpiar_consola():
-  print("\n")
-  os.system("pause")
-  os.system("cls")
+    print("\n")
+    os.system("pause")
+    os.system("cls")
 
 
 def cargar_lista_de_caracter(mensaje: str, mensaje_error: str) -> str:
@@ -79,7 +79,8 @@ def cargar_lista_de_caracter(mensaje: str, mensaje_error: str) -> str:
     lista.append(texto)
     
     return lista
-  
+
+
 def cargar_lista_de_caracteres(mensaje,mensaje_error):
         lista = []
         while True:
