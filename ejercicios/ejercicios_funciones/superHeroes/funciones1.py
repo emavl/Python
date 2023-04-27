@@ -1,6 +1,9 @@
 from data_stark import lista_personajes
 from os import system
 
+# forma de funciones para imprimir los heroes 
+# por color de ojos, pero no es la mejor manera.
+
 system("cls")
 
 
@@ -12,7 +15,7 @@ def listar():
         print (clave)
 
 
-def lista_por_color_ojos():
+def lista_por_color_ojos(lista_personajes: list):
     colores = []
     
     for heroe in lista_personajes:
@@ -28,4 +31,4 @@ def lista_por_color_ojos():
 
 
 
-lista_por_color_ojos()
+lista_por_color_ojos(lista_personajes)

@@ -63,7 +63,7 @@ def limpiar_consola():
     os.system("cls")
 
 
-def cargar_lista_de_caracter(mensaje: str, mensaje_error: str) -> str:
+def cargar_lista_de_caracter(mensaje: str, mensaje_error: str) -> list:
     
     """ Recive el ingreso de un string simple o compuesto
 
