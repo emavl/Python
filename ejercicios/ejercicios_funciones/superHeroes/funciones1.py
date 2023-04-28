@@ -66,24 +66,24 @@ def lista_por_alturas(lista: list[dict], value: str):
     return alturas
 
 
-def set_alturas(lista: list[dict]):
-    flag = True
-    lista_filters = set(lista)
+def promedio_alturas(lista: list[dict]):
+    acc = 0
+    suma = 0
 
-    for altura in lista_filters:
-        if flag or altura > mas_altura:
-            mas_altura = altura
-            flag = False
+    for altura in lista:
+        suma += float(altura)
+        acc += 1
 
-    for heroe in lista_personajes:
-        if mas_altura == float(heroe['altura']):
-            print(f"\t{heroe['nombre']}")
+    promedio = suma/acc
+    if promedio > 200:
+        print(f"El promedio de la altura en los heroes es {promedio:.2f}\n")
+    else:
+        print(f"El promedio de la altura de las heroinas es {promedio:.2f}\n")
 
-
-def print_alturas(lista: list[dict], value: str):
+def print_alturas_promedio(lista: list[dict], value: str):
 
     altura = lista_por_alturas(lista, value)
-    set_alturas(altura)
+    promedio_alturas(altura)
 
 
-print_alturas(lista_personajes, 'F')
+print_alturas(lista_personajes, 'M')

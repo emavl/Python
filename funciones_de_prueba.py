@@ -23,7 +23,6 @@ def traer_caract(list: list[dict], valor: str) -> list:
 
     return elemento
 
-
 def agregar_segun_caract(lista_personajes: list, key: str, value: str):
     elementos = []
 
@@ -33,7 +32,6 @@ def agregar_segun_caract(lista_personajes: list, key: str, value: str):
 
     return elementos
 
-
 def listar_por_keyValue(lista: list, key: str, value: str, imprime: str) -> None:
 
     for item in lista:
@@ -42,19 +40,16 @@ def listar_por_keyValue(lista: list, key: str, value: str, imprime: str) -> None
         if item == heroe[key] and heroe[key] == value:
             print(f"\t{heroe[imprime]}")
 
-
 def lista_agrupada(lista_personajes: list, key: str, value: str, imprime: str) -> None:
 
     lista_seteada = set(agregar_segun_caract(lista_personajes, key, value))
     listar_por_keyValue(lista_seteada, key, value, imprime)
-
 
 def tipo_inteligencia():
 
     lista_agrupada(lista_personajes, 'inteligencia', 'average', 'nombre')
     lista_agrupada(lista_personajes, 'inteligencia', 'good', 'nombre')
     lista_agrupada(lista_personajes, 'inteligencia', 'high', 'nombre')
-
 
 def cantidad_elementos(list: list, key: str, value: str):
     elementos = 0
@@ -65,7 +60,6 @@ def cantidad_elementos(list: list, key: str, value: str):
 
     return elementos
 
-
 def iteraciones(lista: list, key: str):
 
     lista_set = set(traer_caract(lista, key))
@@ -74,6 +68,8 @@ def iteraciones(lista: list, key: str):
         ret = cantidad_elementos(lista, key, item)
         print(
             f"\n la cantidad de heroes que tienen el {key} {item} son ---> {ret}")
+
+
 
 
 
