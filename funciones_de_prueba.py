@@ -6,6 +6,24 @@ from os import system
 system("cls")
 
 
+def traer_caract(list: list[dict], valor: str) -> list:
+    """
+    esta funcion carga a una lista,
+    la caracteristica indicada por el usuario.    
+
+    Args:   list -> lista de personajes
+
+    return -> colores de ojos
+
+    """
+    elemento = []
+
+    for heroe in list:
+        elemento.append(heroe[valor])
+
+    return elemento
+
+
 def agregar_segun_caract(lista_personajes: list, key: str, value: str):
     elementos = []
 
@@ -21,8 +39,8 @@ def listar_por_keyValue(lista: list, key: str, value: str, imprime: str) -> None
     for item in lista:
         print("\n"+key + " " + item + "\n")
     for heroe in lista_personajes:
-            if item == heroe[key] and heroe[key] == value:
-                print(f"\t{heroe[imprime]}")
+        if item == heroe[key] and heroe[key] == value:
+            print(f"\t{heroe[imprime]}")
 
 
 def lista_agrupada(lista_personajes: list, key: str, value: str, imprime: str) -> None:
@@ -39,32 +57,23 @@ def tipo_inteligencia():
 
 
 def cantidad_elementos(list: list, key: str, value: str):
-    elementos = []
+    elementos = 0
 
     for item in list:
         if item[key] == value:
-            elementos.append(item[key])
-    
-    for item in elementos:        
-        print(elementos)
-    # size = str(len(elementos)) 
+            elementos += 1
 
-    # for diccionario in list:
-    #     for clave, valor in diccionario.items():
-    #         if clave == 'color_pelo':
-    #             print(f"la cantidad de heroes que tienen el {key} {valor} son {size}")
-
-        # print()  # Imprime una línea en blanco después de cada diccionario
+    return elementos
 
 
+def iteraciones(lista: list, key: str):
 
-cantidad_elementos(lista_personajes, 'color_pelo','color_pelo')
+    lista_set = set(traer_caract(lista, key))
 
-
-
-
-
-
+    for item in lista_set:
+        ret = cantidad_elementos(lista, key, item)
+        print(
+            f"\n la cantidad de heroes que tienen el {key} {item} son ---> {ret}")
 
 
 

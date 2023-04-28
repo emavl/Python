@@ -51,7 +51,7 @@ def ejecutar_menu():
 
 # ----------------------- L i s t a r   p o r   c a r a c t e r i s t i c a  -------------------
 
-def traer_caract(lista_personajes: list[dict], key: str) -> list:
+def traer_caract(lista: list[dict], key: str) -> list:
     """
     esta funcion carga a una lista,
     la caracteristica indicada por el usuario.    
@@ -63,7 +63,7 @@ def traer_caract(lista_personajes: list[dict], key: str) -> list:
     """
     elemento = []
 
-    for heroe in lista_personajes:
+    for heroe in lista:
         elemento.append(heroe[key])
     
     return elemento
@@ -139,10 +139,10 @@ def lista_por_caracteristica(lista_personajes: list[dict], valor: str, comparaci
 
 # ------------------------  L i s t a s   A g r u p a d a s -------------------
 
-def agregar_segun_caract(lista_personajes: list[dict], key: str, value: str):
+def agregar_segun_caract(lista: list[dict], key: str, value: str):
     elementos = []
     
-    for item in lista_personajes:
+    for item in lista:
         if item[key] == value:
             elementos.append(item[key])
         
@@ -156,9 +156,9 @@ def listar_por_keyValue(lista: list[dict], key: str, value: str, imprime: str) -
             if item == heroe[key] and heroe[key] == value:
                 print (f"\t{heroe[imprime]}") 
 
-def lista_agrupada(lista_personajes: list[dict], key: str, value: str, imprime: str) -> None:
+def lista_agrupada(lista: list[dict], key: str, value: str, imprime: str) -> None:
 
-    lista_seteada = set(agregar_segun_caract(lista_personajes, key, value))
+    lista_seteada = set(agregar_segun_caract(lista, key, value))
     listar_por_keyValue(lista_seteada, key,value, imprime)
 
 def tipo_inteligencia():
@@ -167,9 +167,77 @@ def tipo_inteligencia():
     lista_agrupada(lista_personajes, 'inteligencia', 'good', 'nombre')
     lista_agrupada(lista_personajes, 'inteligencia', 'high', 'nombre')
 
+# ------------------------  L i s t a s   D e t e r m i n a d a s -------------------
+
+def cantidad_elementos(list: list, key: str, value: str):
+    elementos = 0
+
+    for item in list:
+        if item[key] == value:
+            elementos += 1
+    
+    return elementos
+
+def determinar_caract(lista: list, key: str):
+
+    lista_set = set(traer_caract(lista, key))
+    
+    for item in lista_set:
+        ret = cantidad_elementos(lista, key, item)
+        print(f"\n la cantidad de heroes que tienen el {key} {item} son ---> {ret}")  
+        
+# ----------------------- L i s t a s  -   A l t u r a  -----------------------
+
+def lista_por_alturas(lista: list[dict], value: str):
+    alturas = []
+
+    for heroe in lista:
+        if heroe['genero'] == value:
+            alturas.append(float(heroe['altura']))
+
+    return alturas
+
+def set_alturas(lista: list[dict]):
+    flag = True
+    lista_filters = set(lista)
+
+    for altura in lista_filters:
+        if flag or altura > mas_altura:
+            mas_altura = altura
+            flag = False
+
+    for heroe in lista_personajes:
+        if mas_altura == float(heroe['altura']):
+            print(f"\t{heroe['nombre']}")
+
+def set_altura_baja(lista: list[dict]):
+    flag = True
+    lista_filters = set(lista)
+
+    for altura in lista_filters:
+        if flag or altura < mas_baja:
+            mas_baja = altura
+            flag = False
+
+    for heroe in lista_personajes:
+        if mas_baja == float(heroe['altura']):
+            print(f"\t{heroe['nombre']}")
+
+def print_alturas(lista: list[dict], value: str):
+    
+    altura = lista_por_alturas(lista, value)
+    set_alturas(altura)
+
+def print_altura_baja(lista: list[dict], value: str):
+    
+    altura = lista_por_alturas(lista, value)
+    set_altura_baja(altura)
+
+
+
 # ----------------------- M e n ú   -   P r i n c i p a l  -----------------------
 
-def main():
+def codigo_principal():
 
 
     
@@ -182,27 +250,36 @@ def main():
             case 2: #  2) listar por héroe por genero F 
                 system("cls")
                 lista_agrupada(lista_personajes,'genero', 'F', 'nombre')
-                limpiar_consola()
+                limpiar_consola()                
+            case 3: #  3) Héroe más alto 
+                system("cls")
+                print_alturas(lista_personajes,'M')
+                limpiar_consola()                
                 pass
-            case 3: #  3) Héroe más alto TODO
-                pass
-            case 4: #  4) Heroína mas alta TODO
-                pass
+            case 4: #  4) Heroína mas alta 
+                system("cls")
+                print_alturas(lista_personajes,'F')
+                limpiar_consola()  
             case 5: #  5) Heroína mas baja TODO
-                pass
-
+                system("cls")
+                print_altura_baja(lista_personajes,'F')
+                limpiar_consola()  
             case 6: #  6) Promedio altura de los héroes TODO
                 pass
             case 7: #  7) Promedio altura de las heroínas TODO
                 pass
             case 8: #  8) Nombre del superhéroe asociado a los puntos ( C a F ) TODO
-
+                
                 pass
-            case 9: #  9) Determinar cuántos superhéroes tienen cada tipo de color de ojos. TODO
-
+            case 9: #   Determinar cuántos superhéroes tienen cada tipo de color de ojos. 
+                system("cls")    
+                determinar_caract(lista_personajes,'color_ojos')
+                limpiar_consola()
                 pass
-            case 10: # 10) Determinar cuántos superhéroes tienen cada tipo de color de pelo. TODO
-
+            case 10: #  Determinar cuántos superhéroes tienen cada tipo de color de pelo. 
+                system("cls")    
+                determinar_caract(lista_personajes,'color_pelo')
+                limpiar_consola()
                 pass
             case 11: # ------> Listar por tipo de inteligencia 'si lo tiene' 
                 system("cls")    
@@ -221,8 +298,6 @@ def main():
                 system("cls")
                 lista_por_caracteristica(lista_personajes,'inteligencia','inteligencia','inteligencia','nombre')
                 limpiar_consola()
-            # case 15:
+            case 15:
+                break
 
-
-
-main()
