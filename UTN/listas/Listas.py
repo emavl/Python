@@ -86,4 +86,9 @@ print("\nusanado .apend de lista 1 y 2 para incorporarla en una gral.")
 lista_mayor.append(lista1)
 lista_mayor.append(lista2)
 print(lista_mayor)
-print("\n\n")
+print("\n")
+
+lista_frutas = ['banana', 'pera', 'manzana', 'higos']
+lista_frutas[0] = 'mango'
+print("\na la lista de frutas, le cambiamos la banana por el mango.")
+print(lista_frutas)

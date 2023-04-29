@@ -71,5 +71,18 @@ def iteraciones(lista: list, key: str):
 
 
 
+def pedir_numero_min_max(mensaje, mensaje_error, min, max):
+
+    while True:
+        try:
+            num = int(input(mensaje))
+            if (num < min or num > max):
+                raise ValueError
+            break
+        except ValueError:
+            print(mensaje_error)
+
+    return num
+
 
 

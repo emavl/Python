@@ -59,3 +59,22 @@ print ("\ny con clear eliminamos el set por completo")
 s1.clear()
 print(s1)
 print()
+print("podemos agregar multiples items dentro del set")
+st = {'item1', 'item2', 'item3', 'item4'}
+st.update(['item5','item6','item7'])
+print(st)
+
+print("usando intersection")
+# La intersección devuelve un conjunto de elementos 
+# que se encuentran en ambos conjuntos.
+python = {'p', 'y', 't', 'h', 'o','n'}
+dragon = {'d', 'r', 'a', 'g', 'o','n'}
+print(python.intersection(dragon))     # {'o', 'n'}
+
+print("\nusando difference()")
+st1 = {'item1', 'item2', 'item3', 'item4'}
+st2 = {'item2', 'item3'}
+st2.difference(st1) # set()
+st1.difference(st2) # {'item1', 'item4'} => st1\st2
+print(st2.difference(st1))
+print(st1.difference(st2))
