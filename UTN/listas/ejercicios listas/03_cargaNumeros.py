@@ -1,4 +1,4 @@
-from mi_bibliotecas import *
+from mi_biblioteca import *
 import os
 # Realizar una carga indefinida de números
 # , añadirlos a una lista e indicar 

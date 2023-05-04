@@ -4,17 +4,20 @@ import os
 # cuente el número de letras que contiene.
 os.system("cls")
 
-def cuenta_cadena(cadena:str):
-    
+
+def cuenta_cadena(cadena: str):
+
     for letra in cadena:
         num_letra = cadena.index(letra)
 
-    print(num_letra)  
-    
+    print(num_letra)
+
+
 def main():
-    
+
     texto = input("ingrese palabra ")
-    
+
     cuenta_cadena(texto)
+
 
 main()

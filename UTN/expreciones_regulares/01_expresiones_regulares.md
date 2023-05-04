@@ -1,56 +1,76 @@
-""" Una expresión regular o regex es una cadena de texto especial que ayuda a encontrar patrones en los datos.
+# Expreciones regulares  
+
+ Una expresión regular o regex es una cadena de texto especial que ayuda a encontrar patrones en los datos.
+
  Se puede usar una regex para verificar si existe algún patrón en un tipo de datos diferente.
- Para usar Regex en Python primero debemos importar el módulo Regex que se llama *Re *.
-"""
-[Match](#match)
-[Match](#Search)
-[Match](#Buscando-todas-las-coincidencias-usando-findall)
-[Match](#Reemplazo-de-una-subcadena)
-[Match](#División-de-texto-usando-RegEx-Split)
+ Para usar Regex en Python primero debemos importar el módulo Regex que se llama *Re*.
 
+[Match -](#match)
+[Search -](#search)
+[Findall -](#buscando-todas-las-coincidencias-usando-findall)
+[Sub -](#reemplazo-de-una-subcadena)
+[Split](#Division-de-texto-usando-RegEx-Split)
 
-""" La importamos de la siguiente manera """
+ La importamos de la siguiente manera  
 
 ```py
 import re
 ```
-### metodos en RE.
 
-Para encontrar un patrón usamos diferentes conjuntos de *re* Conjuntos de caracteres que permiten buscar una coincidencia en una cadena.
+## *__metodos en RE__*
 
-* *re.match()*: Las búsquedas solo al comienzo de la primera línea de la cadena y devuelven objetos coincidentes si se encuentra, de lo contrario no devuelve ninguno.
-* *re.search*: Devuelve un objeto de coincidencia si hay uno en cualquier lugar de la cadena, incluidas las cadenas multilíneas.
-* *re.findall*: Devuelve una lista que contiene todas las coincidencias
-* *re.split*:	Toma una cadena, la divide en los puntos de partido, devuelve una lista
-* *re.sub*:  Reemplaza una o muchas coincidencias dentro de una cadena
+Para encontrar un patrón usamos diferentes metodos de *__re__*. Conjuntos de caracteres que permiten buscar una coincidencia en una cadena.
 
-### match
+* *__re.match()__*: Las búsquedas solo al comienzo de la primera línea de la cadena y devuelven objetos coincidentes si se encuentra, de lo contrario no devuelve ninguno.
+* *__re.search__*: Devuelve un objeto de coincidencia si hay uno en cualquier lugar de la cadena, incluidas las cadenas multilíneas.
+* *__re.findall__*: Devuelve una lista que contiene todas las coincidencias
+* *__re.split__*: Toma una cadena, la divide en los puntos de partido, devuelve una lista
+* *__re.sub__*:  Reemplaza una o muchas coincidencias dentro de una cadena
+<br>
+<br>
+
+## *__match__*
 
 ```py
 # syntac
-re.match(substring, string, re.I)
+re.match(subcadena, cadena, re.I)
 # La subcadena es una cadena o un patrón, la cadena es el texto que buscamos un patrón, re.i es caso ignorar
 ```
 
 ```py
-import re
+mi_cadena = "Esto se trata de expresiones regulares, donde trata las repeticiones"
+mi_cadena2 = "Esto no va a tratase de expresiones regulares"
 
-txt = 'Me encanta enseñar a Python y JavaScript'
-# Devuelve un objeto con SPAN y coincide
-match = re.match('Me encanta enseñar ', txt, re.I)
-print(match)  # <re.Match object; span=(0, 15), match='I love to teach'>
-# Podemos obtener la posición de inicio y finalización del partido como tupla usando SPAN
-span = match.span()
-print(span)     # (0, 15)
-# Vamos a encontrar la posición de inicio y parada desde el tramo
-start, end = span
-print(start, end)  # 0, 15
-substring = txt[start:end]
-print(substring)       # Me encanta enseñar
+
+# imprimo el match donde uno me muestra que encontro algo dentro del mi_cadena
+# y en donde no pudo me imprime None")
+
+print(re.match("Esto se trata", mi_cadena2)) # None porque no encontro "Esto se trata"
+match = re.match("Esto se trata", mi_cadena)
+ #<re.Match object; span=(0, 13), match='Esto se trata'>
+print(match)
+
+print("-"*40)
+
+# imprimo span que es una tupla formada por dos valores el que comienzo y el que final"
+comienzo, final = match.span()
+print(f"donde el comienzo es {comienzo} y el final es {final}")
+
+# para comprobar el None podemos utilizar estas 3 formas
+ if not (match == None)
+ if match != None:
+ if match is not None:
+     print("contiene el texto")
+ else:
+     print("No contiene el texto")
+
+# donde en vez de imprimir si es none me dice si contiene o no el texto
+
 ```
-Como puede ver en el ejemplo anterior, el patrón que estamos buscando 
-(o la subcadena que estamos buscando) es *Me encanta enseñar *.
-La función de coincidencia devuelve un objeto ** solo ** Si el texto comienza con el patrón.
+
+Como puede ver en el ejemplo anterior, el patrón que estamos buscando
+(o la subcadena que estamos buscando) es *__"Esto se trata"__*.
+La función de coincidencia devuelve un objeto *__solo__* Si el texto comienza con el patrón.
 
 ```py
 import re
@@ -59,51 +79,83 @@ txt = 'Me encanta enseñar Python y JavaScript'
 match = re.match('Me gusta enseñar', txt, re.I)
 print(match)  # None
 ```
-La cadena no tiene una cadena con *Me gusta enseñar *, por lo tanto, no había coincidencia y el método de coincidencia no devolvió ninguno.
 
-#### Search
+La cadena no tiene una cadena con *Me gusta enseñar*, por lo tanto, no había coincidencia y el método de coincidencia no devolvió ninguno.
+<br>
+<br>
+
+## *__Search__*
 
 ```py
 # syntax
-re.match(substring, string, re.I)
+re.match(sbucadena, cadena, re.I)
 # La subcadena es un patrón, la cadena es el texto que buscamos un patrón, re.i es caso Ignorar la bandera
 ```
+
 ```py
 import re
 
-txt = '''Python es el idioma más hermoso que un ser humano ha creado.
-Recomiendo a Python para un primer lenguaje de programación'''
-
+txt = "Python es el idioma más hermoso que un ser humano ha creado.Recomiendo a Python para un primer lenguaje de programación
+"
 # Devuelve un objeto con SPAN y Match
 match = re.search('primer', txt, re.I)
 print(match)  # <re.Match object; span=(100, 105), match='primer'>
-# Podemos obtener la posición de inicio y finalización del partido como tupla usando el tramo(span)
+
+# Podemos obtener la posición de inicio y finalización de la cadena como tupla usando el tramo(span) = span.
 span = match.span()
 print(span)     # (100, 105)
-# Vamos a encontrar la posición de inicio y parada desde el tramo(span)
-start, end = span
-print(start, end)  # 100 105
-substring = txt[start:end]
+
+# Vamos a encontrar la posición de comienzo y final desde el (span)
+comienzo, final = span
+print(comienzo, final)  # 100 105
+substring = txt[comienzo:final]
 print(substring)       # primer
 ```
-Como puede ver, la búsqueda es mucho mejor que el partido porque puede buscar el patrón en todo el texto.La búsqueda devuelve un objeto de coincidencia con una primera coincidencia que se encontró, de lo contrario devuelve _none_.Una función *re *mucho mejor es *findall *.Esta función verifica el patrón a través de toda la cadena y devuelve todas las coincidencias como una lista.
 
-#### Buscando todas las coincidencias usando *findall*
+<br>
 
+Como puede ver, la búsqueda es mucho mejor que el match porque puede buscar el patrón en todo el texto. La búsqueda devuelve un objeto de coincidencia con una primera coincidencia que se encontró, de lo contrario devuelve *__none__*. Una función *__re__* mucho mejor es *__findall__*. Esta función verifica el patrón a través de toda la cadena y devuelve todas las coincidencias como una lista.
 
-*findall()* Devuelve todos los partidos como una lista
+<br>
+<br>
+
+## Buscando todas las coincidencias usando *__findall__*
+
+*findall()* Devuelve una lista con todas las ocurrencias
 
 ```py
+encontrar_todo = re.findall("trata", mi_cadena, re.I)
+
+#Findall nos muestra la cantidad de ocurrencias colocandolo en una lista"
+print(encontrar_todo)
+txt = "Modelo de expliiiicacion de expreciones"
+
+#Como tambien nos muestra la cantidad de ocurrencias de la misma si estan repetidas"
+print(re.findall("i+", txt)) # ['iiii', 'i', 'i']
+
+ # Donde el + significa(encontrame la letra i en el caso de ser repetidas)
+
+------------------------------------------------
+
 txt = '''Python es el language más hermoso que un ser humano ha creado.
 Recomiendo a Python para un primer lenguaje de programación'''
 
 # Devuelve una lista con las veces que aparece la palabra lenguaje en este caso.
 matches = re.findall('language', txt, re.I)
 print(matches)  # ['language', 'language']
+
+print(re.findall(" ", txt)
+puedo pedirle que me encuentre todos los espacios en blanco
+[' ', ' ', ' ', ' ']
+
 ```
 
-Como puede ver, la palabra * lenguaje * se encontró dos veces en la cadena. Practicemos un poco más.
-Ahora buscaremos ambas palabras - Python y python en la cadena:
+<br>
+
+La palabra *__" lenguaje "__* se encontró dos veces en la cadena.
+ Ahora buscaremos ambas palabras - Python y python en la cadena:
+<br>
+<br>
 
 ```py
 txt = '''Python es el idioma más hermoso que un ser humano ha creado.
@@ -114,11 +166,15 @@ matches = re.findall('python', txt, re.I)
 print(matches)  # ['Python', 'python']
 
 ```
-Utilizando en la expresion * re.I * se incluyen letras minúsculas y mayúsculas.Si no tenemos la bandera Re.i, tendremos que escribir nuestro patrón de manera diferente.Vamos a verlo:
+
+<br>
+
+Utilizando en la expresion *__re.I__* o *__re.IGNORECASE__* se incluyen letras minúsculas y mayúsculas. Si no tenemos la bandera Re.i, tendremos que escribir nuestro patrón de manera diferente. Vamos a verlo:
+
+<br>
 
 ```py
-txt = '''Python es el idioma más hermoso que un ser humano ha creado.
-Recomiendo a Python para un primer lenguaje de programación'''
+txt = "Python es el idioma más hermoso que un ser humano ha creado.Recomiendo a Python para un primer lenguaje de programación "
 
 matches = re.findall('Python|python', txt)
 print(matches)  # ['Python', 'python']
@@ -129,7 +185,9 @@ print(matches)  # ['Python', 'python']
 
 ```
 
-### Reemplazo de una subcadena
+<br>
+
+## *__Reemplazo de una subcadena__*
 
 ```py
 txt = '''Python es el idioma más hermoso que un ser humano ha creado.
@@ -140,27 +198,29 @@ print(match_replaced)  # JavaScript es el lenguaje más hermoso que un ser human
 # O
 match_replaced = re.sub('[Pp]ython', 'JavaScript', txt, re.I)
 print(match_replaced)  # JavaScript es el lenguaje más hermoso que un ser humano ha creado.
+
+mi_cadena3 =" esta Leccion es para darnos una leccion de una list"
+
+# reemplazo parte de la cadena por otra
+
+print(re.sub("Esto se trata","hoy vamos a hablar", mi_cadena))
+#hoy vamos a hablar de expresiones regulares, donde trata las repeticiones
+
+# Otras formas de hacelo
+ 
+print(re.sub("leccion","LECCION", mi_cadena3))
+ # esta Leccion es para darnos una LECCION de una list
+
+print(re.sub("leccion|Leccion","LECCION", mi_cadena3))
+# esta LECCION es para darnos una LECCION de una list
+
+print(re.sub("[l|L]eccion","LECCION", mi_cadena3))
+# esta LECCION es para darnos una LECCION de una list
 ```
 
-Agregamos un ejemplo más.La siguiente cadena es realmente difícil de leer a menos que eliminemos el símbolo %.Reemplazar el % con una cadena vacía limpiará el texto.
+<br>
 
-```py
-
-txt = '''%S o%y ma%%es%%tro%r% a%%d %% I l%o%ve te%ach%ing. 
-T%he%re i%s n%o%th%ing as r%ewarding a%s e%duc%at%i%ng a%n%d e%m%p%ow%er%ing p%e%o%ple.
-I fo%und te%a%ching m%ore i%n%t%er%%es%ting t%h%an any other %jobs. 
-D%o%es thi%s m%ot%iv%a%te %y%o%u to b%e a t%e%a%cher?'''
-
-matches = re.sub('%', '', txt)
-print(matches)
-```
-
-```sh
-Soy maestra y me encanta enseñar.
-No hay nada tan gratificante como educar y empoderar a las personas.
-Encontré la enseñanza más interesante que cualquier otro trabajo.¿Esto te motiva a ser maestro?
-```
-## División de texto usando RegEx Split
+## *__División de texto usando RegEx Split__*
 
 ```py
 txt = '''Soy maestra y me encanta enseñar.
@@ -176,71 +236,78 @@ print(re.split('\n', txt)) # dividido usando \n - símbolo de fin de línea
 
 ## Escribiendo RegEx Patronas
 
-Para declarar una variable de cadena, usamos una cotización única o doble.Para declarar la variable regex *r '' *.
-El siguiente patrón solo identifica a Apple con minúsculas, para que sea insensible al estuche, o debemos reescribir nuestro patrón o debemos agregar una bandera.
+Para declarar una variable de cadena se utilizan comillas simples o dobles. Para declarar la variable RegEx r''. El siguiente patrón sólo identifica manzana con minúsculas, para hacerlo insensible a mayúsculas y minúsculas deberíamos reescribir nuestro patrón o añadir una bandera
+
 ```py
 import re
 
 regex_pattern = r'manzana'
-txt = 'Apple y plátano son frutas.Un viejo dicho dice que una manzana al día, una forma de médico ha sido reemplazada por un plátano al día, mantiene al médico muy lejos. '
+
+txt = 'Manzana y plátano son frutas.Un viejo dicho dice que una manzana al día, una forma de médico ha sido reemplazada por un plátano al día, mantiene al médico muy lejos. '
+
 matches = re.findall(regex_pattern, txt)
 print(matches)  # ['apple']
 
-# Para hacer que la cartera de carcas sea insensible para agregar bandera '
+# Para distinguir entre mayúsculas y minúsculas agregamos la bandera '
 matches = re.findall(regex_pattern, txt, re.I)
 print(matches)  # ['Manzana', 'manzana']
+
 # o podemos usar un conjunto de métodos de caracteres
+
 regex_pattern = r'[Aa]pple'  # Esto significa que la primera letra podría ser Apple o Apple
+
 matches = re.findall(regex_pattern, txt)
 print(matches)  # ['Manzana', 'manzana']
 
 
 ```
-* []:  A set of characters
-  * [a-c] means, a or b or c
-  * [a-z] means, any letter from a to z
-  * [A-Z] means, any character from A to Z
-  * [0-3] means, 0 or 1 or 2 or 3
-  * [0-9] means any number from 0 to 9
-  * [A-Za-z0-9] any single character, that is a to z, A to Z or 0 to 9
-* \\:  uses to escape special characters
-  * \d means: match where the string contains digits (numbers from 0-9)
-  * \D means: match where the string does not contain digits
-* . : any character except new line character(\n)
-* ^: starts with
-  * r'^substring' eg r'^love', a sentence that starts with a word love
-  * r'[^abc] means not a, not b, not c.
+
+* [ ]:  Un conjunto de caracteres
+  * [a-c] significa, conjunto de las letras a o b o c.
+  * [a-z] significa, cualquier letra dentro del abecedario en minuscula.
+  * [A-Z] significa, cualquier letra dentro del abecedario en mayuscula.
+  * [0-3] significa, conjunto de numeros del 1 al 3
+  * [0-9] significa, conjunto de numeros del 1 al 9
+  * [A-Za-z0-9] cualquier caracter, si es de la (a - z), (A - Z) o (0 al 9)
+* \\ :  usa para escapar de los caracteres especiales
+  * \d  coincidir donde la cadena contiene dígitos (números de 0-9)
+  * \D  coincidir donde la cadena no contiene dígitos
+*.: Cualquier personaje excepto el caracter de nueva línea (\ n)
+
+* ^: comienza con
+  * r'^subcadena' eg r'^love', Una oración que comienza con una palabra amor
+  * r'[^abc] significa no A, no B, no c.
 * $: ends with
-  * r'substring$' eg r'love$', sentence  that ends with a word love
-* *: zero or more times
-  * r'[a]*' means a optional or it can occur many times.
-* +: one or more times
-  * r'[a]+' means at least once (or more)
-* ?: zero or one time
-  *  r'[a]?' means zero times or once
-* {3}: Exactly 3 characters
-* {3,}: At least 3 characters
-* {3,8}: 3 to 8 characters
-* |: Either or
-  * r'apple|banana' means either apple or a banana
+  * r'subcadena$ ' eg r'love$' , oración que termina con una palabra amor
+* *: cero o más veces
+  * r'[a]*' significa una opcional o puede ocurrir muchas veces.
+* +: una o muchas veces
+  * r'[a]+' significa al menos una vez (o más)
+* ?: cero o una vez
+  * r'[a]?' significa cero veces o una vez
+* {3}: Exactamente 3 caracteres
+* {3,}: Al menos 3 caracteres
+* {3,8}: 3 a 8 caracteres
+* |: or o
+  * r'manzana | banana' significa manzana o un plátano
 * (): Capture and group
 
-![Regular Expression cheat sheet](../images/regex.png)
+Usemos ejemplos para aclarar los meta caracteres anteriores
 
-Let us use examples to clarify the meta characters above 
+<br>
 
-### Square Bracket
+## *__Square Bracket__*
 
-Let us use square bracket to include lower and upper case
+Utilicemos corchetes para incluir minúsculas y mayúsculas
 
 ```py
-regex_pattern = r'[Aa]pple' # this square bracket mean either A or a
-txt = 'Apple and banana are fruits. An old cliche says an apple a day a doctor way has been replaced by a banana a day keeps the doctor far far away.'
+regex_pattern = r'[Aa]pple' # este corchete significa A o a
+txt = 'La manzana y la banana son frutas. Un viejo dicho dice que una manzana y una banana al día mantiene al médico muy lejos.'
 matches = re.findall(regex_pattern, txt)
 print(matches)  # ['Apple', 'apple']
 ```
 
-If we want to look for the banana, we write the pattern as follows:
+Si quisieramos buscar tambien la banana sería de la siguiente manera
 
 ```py
 regex_pattern = r'[Aa]pple|[Bb]anana' # this square bracket means either A or a
@@ -344,7 +411,9 @@ print(matches)  # ['6,', '2019', '8', '2021']
 ## 💻 Exercises: Day 18
 
 ### Exercises: Level 1
+
  1. What is the most frequent word in the following paragraph?
+
 ```py
     paragraph = 'I love teaching. If you do not love teaching what else can you love. I love Python if you do not love something which can give you all the capabilities to develop an application what else can you love.
 ```
