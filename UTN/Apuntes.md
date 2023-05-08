@@ -1,3 +1,4 @@
+# Apuntes Programacion. Python
 
 Una de las caracteristicas de python es que es un lenguaje de proposito general
 desde juegos hasta web IA 
@@ -16,10 +17,13 @@ lenjuajes que debo definir el tipo de dato, por eso es un lenjuage estatico.
 
 Por que debo usar python.
 porque es mas facil de definir y eficiente a la hora programar
+
 - es un lenguaje que podemos mezclar con otro tipo de lenguajes
 - es un lenguaje multiparadigma, se puede transladar a diferentes OS.
 
-─────────────────  F u n c i o n e s ─────────────────►
+## ───────────────  F u n c i o n e s ───────────────►
+
+<br>
 
 En programación, una función y un método son dos conceptos relacionados pero distintos.
 

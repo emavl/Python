@@ -275,7 +275,7 @@ print(matches)  # ['Manzana', 'manzana']
 *.: Cualquier personaje excepto el caracter de nueva línea (\ n)
 
 * ^: comienza con
-  * r'^subcadena' eg r'^love', Una oración que comienza con una palabra amor
+  * r'^subcadena' eg r'^amor', Una oración que comienza con una palabra amor
   * r'[^abc] significa no A, no B, no c.
 * $: ends with
   * r'subcadena$ ' eg r'love$' , oración que termina con una palabra amor
