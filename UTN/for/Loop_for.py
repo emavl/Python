@@ -1,12 +1,19 @@
-import os
+from os import system
 
-os.system("cls")
+system("cls")
+
 print(" -------- -- L i s t a s -- --------- \n")
 
 lista = ['a','b','c']
 
 for letra in lista:
     print("letra "+letra)
+# imprime 
+# letra b
+# letra c
+# letra a
+# letra b
+# letra c
 
 for letra in lista:
     num_letra = lista.index(letra)
@@ -21,7 +28,7 @@ print("\nlos nombres que comienzan con l son: ")
 for nombre in lista1:
     if nombre.startswith('l'):
         print(nombre)
-
+# Imprime los nombres que comienzan con la letra L 
 print("─"*30)
 numeros = [1,2,3,4,5]
 miValor = 0
@@ -50,6 +57,7 @@ for listas in [1,2,3]:
     print(listas)
 
 print("─"*30)
+
 # o bien varias listas u objetos
 print("\nImprimo varias listas:")
 for objeto in [[1,2],[3,4],[5,6]]:
@@ -90,31 +98,12 @@ print("\nOtra manera distinta de "
 for a,b in diccionario.items():
     print(f"{a}:^10,{b}")
 
-print("─"*45)
-
-my_tupla = (35, "emanuel", "vidal", 1.76)
-
-miSet1 = set((1,2,3,(4,5,6),7,8,9))
-
 cliente = {'nombre': (input("\ningrese un nombre ")),
            'apellido': (input("ingrese un apellido ")),
            'peso': int(input("ingrese su peso ")),
            'altura': float(input("ingrese su altura: ")),
            "lengujes":{"python","swift","kotlin"}}
 
-print("─"*45)
-print("\nimprimo la tupla")
-
-for element in my_tupla:
-    print(element)
-
-print("─"*45)
-print("\nimprimo el set")
-
-for element in miSet1:
-    print(element)
-
-print("─"*45)
 print("\nimprimo el cliente\n")
 
 for element in list(cliente.items()):
@@ -129,3 +118,25 @@ for element in cliente:
         break
 else:
     print("el bucle for para dicc. a finalizado")
+
+print("─"*45)
+
+my_tupla = (35, "emanuel", "vidal", 1.76)
+
+miSet1 = set((1,2,3,(4,5,6),7,8,9))
+
+
+
+print("─"*45)
+print("\nimprimo la tupla")
+
+for element in my_tupla:
+    print(element)
+
+print("─"*45)
+print("\nimprimo el set")
+
+for element in miSet1:
+    print(element)
+
+print("─"*45)

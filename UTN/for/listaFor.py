@@ -17,7 +17,7 @@ for indice in range(3):
 #     print(i)
     
 # imprimiendo en la misma linea.
-nombres_en_linea = " ".join(indice for indice in personas)
+nombres_en_linea = ", ".join(indice for indice in personas)
 print(nombres_en_linea)
     
 # ───► ───► ───► ───► ───► Apunte 
