@@ -1,2 +1,5 @@
-Este es un ejemplo para mostrar cómo abrir un archivo y leer.
-Esta es la segunda línea del texto para seguir aprendiendo de Python
+esto es un archivo de texto plano
+esto es otra linea
+aplicando lo aprendiendo a partir 
+de archivo de texto plano
+

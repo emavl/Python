@@ -270,10 +270,13 @@ print(matches)  # ['Manzana', 'manzana']
   * [0-9] significa, conjunto de numeros del 1 al 9
   * [A-Za-z0-9] cualquier caracter, si es de la (a - z), (A - Z) o (0 al 9)
 * \\ :  usa para escapar de los caracteres especiales
-  * \d  coincidir donde la cadena contiene dígitos (números de 0-9)
-  * \D  coincidir donde la cadena no contiene dígitos
-*.: Cualquier personaje excepto el caracter de nueva línea (\ n)
-
+  * \d  busca digitos numericos del 0-9
+  * \D  busca todo lo que no contenga dígitos  
+  * \w busca caracteres alfanumericos [a - z, de la A-Z, 0 al 9 incluso _ ]
+  * \s busca los espacios en blanco
+  * \S busca todo pero obvia los espacios en blanco  
+  * . Busca todo menos los saltos en linea.
+  
 * ^: comienza con
   * r'^subcadena' eg r'^amor', Una oración que comienza con una palabra amor
   * r'[^abc] significa no A, no B, no c.
