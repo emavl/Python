@@ -67,7 +67,17 @@ def pedir_numero_min_max(mensaje, mensaje_error, min, max):
     return num
 
 
-def pedir_numero(mensaje, mensaje_error):
+def pedir_numero(mensaje: str, mensaje_error: str) -> int:
+     
+    """
+    Peticion al usuario de un numero
+    
+    arg:
+
+    mensaje (str) -> Mensaje del usuario para peticion de datos.
+    mensaje_error (str) -> mensaje de error
+
+    """     
     while True:
         try:
             num = input(mensaje)
@@ -79,7 +89,6 @@ def pedir_numero(mensaje, mensaje_error):
             print(mensaje_error)
 
     return num
-
 
 def limpiar_consola():
     print("\n")

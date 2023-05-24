@@ -2,4 +2,3 @@ esto es un archivo de texto plano
 esto es otra linea
 aplicando lo aprendiendo a partir 
 de archivo de texto plano
-
