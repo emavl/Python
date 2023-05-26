@@ -163,3 +163,15 @@ data['clientes'].append({ 'nombre': 'Ana', 'edad': 26})
 with open('data.json', 'w') as file:
     json.dump(data, file, indent=4, ensure_ascii=False )
 ```
+
+La lectura es similar al proceso de escritura, se
+debe abrir un archivo y procesar esté utilizando el
+método load.
+
+```py
+import json
+
+with open('data.json') as file:
+ data = json.load(file)
+```
+

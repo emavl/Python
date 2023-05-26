@@ -2,10 +2,6 @@
   "nombre": "Emanuel",
   "apellido": "Vidal",
   "edad": 35,
-  "lenguaje": [
-    "python",
-    "C",
-    "C#"
-  ],
+  "lenguaje": ["python", "C", "C#"],
   "localidad": "Bernal"
 }

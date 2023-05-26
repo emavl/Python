@@ -7,7 +7,7 @@ system("cls")
 #   >>>---------> Lectura
 
 # lo abrimos, lo leemos (r) y lo almacenamos en la variable
-archivo = open("archivos\\prueba.txt", "r")
+# archivo = open("archivos\\prueba.txt", "r")
 archivo = open("archivos\\prueba.txt", "r+")  # Leer y escribir (r+)
 
 # print(prueba_txt.read()) # me imprime el archivo completo

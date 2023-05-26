@@ -5,7 +5,7 @@ system("cls")
 ######  Creando un archivos ##### 
 
 # va a intentar leer el archivo como no existe lo crea 
-archivo = open("./archivos/mi_archivo.txt", "w+") # Lo abro en lectura/escritura
+archivo = open("../file/mi_archivo.txt","w") # Lo abro en lectura/escritura
 
 archivo.write("\nCreamos y abrimos el archivo nuevo")
 
