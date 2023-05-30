@@ -46,6 +46,9 @@ open('Nombre_del_archivo', mode) # mode (r, a, w, x, t,b)  podría ser lectura, 
 
 ## *__Open__*
 
+la funcion open carga el archivo CSV del dico rigido en la memoria RAM y me devuelve un
+objeto para poder trabajar con ese archivo en memoria.   
+
 ```py
 f = open('./Archivos/Lectura_archivo_ejemplo.txt')
 txt = f.read() # lo leemos 

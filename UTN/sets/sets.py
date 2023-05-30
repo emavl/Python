@@ -1,3 +1,6 @@
+from os import system
+system("cls")
+
 """
    su particularidad es porque solo admite elementos unicos
  No admite que se repitan los elementos, si sucede eso no lo agrega
@@ -12,19 +15,21 @@ miSet = set([1,2,3,4,5])
 
 # otra forma de declararlo
 
-otroSet = {1,2,3}
+otroSet = {1,2,3} # output {1, 2, 3, 4, 5} 
 
 print(miSet)
 
 # que podemos hacer con ellos . . .
 
-# agregar un tuple, por que es inmutable al igual que el set
+# agregar una tupla, por que es inmutable al igual que el set
 miSet1 = set((1,2,3,(4,5,6),7,8,9))
 print("con el tuple dentro "+ str(miSet1))
 
 print("\npuedo preguntar si se encuentra \nel valor 2 dentro de mi set"
 "y eliminarlo con .remove(2) ")
-print(2 in miSet)
+
+print(2 in miSet) # output True 
+
 if 2 in miSet:
   # podemos remover
   miSet.remove(2)
