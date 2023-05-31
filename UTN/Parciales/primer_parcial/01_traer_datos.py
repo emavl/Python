@@ -1,11 +1,11 @@
 from os import system
 import re
+insumo_csv = (r"UTN\Parciales\primer_parcial\insumos.csv")
 
-system("cls")
 
 # ---------------------------------- F u n c i o n e s ------------------------------------------------
 
-def normalizar_datos(lista: str):
+def fx_normalizar_datos(lista: str):
     """
     Lee un archivo de texto con información sobre personajes y devuelve una lista de diccionarios con la información normalizada.
     Args:
@@ -35,42 +35,30 @@ def normalizar_datos(lista: str):
         
     return insumos
 
+def fx_cantidad_marcas( lista: list):
 
+    marca = {}
+    
+    for insumo in archivo:
+        if insumo['marca'] not in marca:
+            marca[insumo['marca']] = 1
+        else:
+            marca[insumo['marca']] += 1
 
-
+    system("cls")
+    print(" "+"_"*30)   
+    print( f"| {'Marca':^16}|{' Cantidades':^9} |")
+    print(f" "+"─"*30)
+    for marca, cantidad in marca.items():
+        print(f"| {marca:^15} | {cantidad:^10} |")
+        print(f"─"*31)
 
 # -------------------------------------------------------------------------------------------------------
 
-archivo = normalizar_datos("insumos.csv")
+archivo = fx_normalizar_datos(insumo_csv)
 
-# print(datos[2])
+# fx_cantidad_marcas(archivo)
 
-dic_marcas = {'marca': None ,'cantidad': None}
-
-
-
-# muestro las marcas.
-# for item in datos[]['marca']:
-#        print(item)
-
-
-# for item in datos:
-#     for nombre in item:
-#        for key,value in dic_marcas.items():
-#         dic_marcas[key] = item['marca']
-#     print(dic_marcas)
-  
-marca = {}
-lista = []  
-  
-for insumo in archivo:
-    if insumo['marca'] not in marca:
-        marca[insumo['marca']] = 1
-    else:
-        marca[insumo['marca']] += 1
-
-print("| marca | cantidad |")
-for marca, cantidad in marca.items():
-    print(f" {marca},  {cantidad}")
-        
+for caracteristicas in archivo:
+    print(str(caracteristicas['caracteristicas'])+'\n')
 

@@ -1,0 +1,1 @@
+lista = ['compatible con windows','Velocidad de hasta 3100Mbps', 'Procesador dual-core de 1.4GHz', 'Tecnología MU-MIMO']
