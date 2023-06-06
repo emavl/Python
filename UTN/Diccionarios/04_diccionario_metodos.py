@@ -9,3 +9,6 @@ diccionario = {
     "apellidos": "vidal",
     "direccion": "carabelas 124"
 }
+
+
+print(diccionario.get("nombre"))

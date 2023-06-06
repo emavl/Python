@@ -1,4 +1,4 @@
-from parcial_compañero.biblioteca import *
+from biblioteca import *
 
 insumos = []
 

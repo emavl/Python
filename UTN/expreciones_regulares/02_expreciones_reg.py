@@ -27,7 +27,7 @@ print(re.search("como","hola como estan?").span()) # output (5, 9)
 print(re.search("como","hola como estan?").start()) # output (5)
 print(re.search("como","hola como estan?").end()) # output (9)
 # o bien buscar numeros
-print(re.search("[0-9]+","las patentes son 1542123 y debe haber 546 letras").group()) # output 1542123
+print(re.search("[*0-9]","las patentes son 1542123 y debe haber 546 letras").group()) # output 1542123
 
 texto = "las patentes son 1542123 y debe haber 546 letras"
 

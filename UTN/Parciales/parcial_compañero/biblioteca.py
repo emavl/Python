@@ -2,6 +2,8 @@ import os
 import json
 import csv
 
+insumos = r"UTN\file\mi_archivo.txt"
+
 def menu_personas()-> str :
     """menu de opciones para personas
 
@@ -94,7 +96,7 @@ print("Fin del programa")
 
 def cargar_datos_desde_archivo(insumos):
     # insumos = []
-    nombre_archivo = r'C:\Users\crist\OneDrive\Escritorio\parcial\Insumos.csv'
+    nombre_archivo = 'Parciales/primer_parcial/insumos.csv'
     # nombre_archivo = "parcial\\Insumos.csv"
     with open(nombre_archivo, "r", encoding="utf-8") as archivo_csv:
             for linea in archivo_csv:

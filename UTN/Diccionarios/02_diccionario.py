@@ -17,12 +17,12 @@ print(type(otro_diccionario))
 
 print()
 
-otro_diccionario = {"Nombre": "Brais",
-                 "Apellido": "Moure", "Edad": 35, 1: "Python"}
+otro_diccionario = {"Nombre": "emanuel",
+                 "Apellido": "vidal", "Edad": 35, 1: "Python"}
 
 mi_diccionario = {
-    "Nombre": "Brais",
-    "Apellido": "Moure",
+    "Nombre": "Emanuel",
+    "Apellido": "vidal",
     "Edad": 35,
     "Lenguajes": {"Python", "Swift", "Kotlin"},
     1: 1.77
