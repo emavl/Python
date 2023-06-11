@@ -377,10 +377,11 @@ def fx_insumo_por_caracteristica(lista: dict[list]):
                  id_insumo = insumo["id"]
                  
                  if id_insumo not in lista_id:
+                    print(f"| { insumo['marca']:^16}|{' ':^55} |\t\t|")
                     nombre = insumo["nombre"]
                     marca = insumo["marca"]
                     lista_id.append(id_insumo)
-                    print(f"\t id {id_insumo}  {nombre}{marca} su caracteristica es {caracteristica}" )
+                    print(f"\t  {nombre}{marca} su caracteristica es {caracteristica}" )
     else:
         print("no se encontro esa caracteristica")
 
