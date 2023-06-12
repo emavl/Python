@@ -114,7 +114,7 @@ def fx_cargar_marca(lista: dict[list]) -> dict[list]:
     Fx que itera sobre una lista pasada por parametro
     guardando las variables necesarias para luego cargarlas
     a un diccionario.
-    
+
     Args:
     lista (dict[list]) -> archivo csv pasado por
     return (dict) -> diccionario
@@ -134,7 +134,7 @@ def fx_print_insumo_marca(insumos_por_marca: dict[list]) -> None:
     """
     Fx que imprime La marca por sobre el insumo,
     mostrando sus cantidades por casda marca.
-    
+
     Args:
     insumos_por_marca (dict[list]) -> diccionario de listas.
     """
@@ -233,7 +233,7 @@ def opcion_3(lista: list, flag: bool) -> bool:
     flag (bool) -> bandera para cambiar un estado.
 
     """
-    
+
     system("cls")
     if (flag):
         fx_insumos_por_marca(lista)
@@ -302,9 +302,7 @@ def app_insumos(insumos: list):
 archivo = fx_normalizar_datos(insumo_csv)
 
 
-
 # app_insumos(insumo_csv)
-
 
 
 def fx_buscar_caracteristica(input_text, caracteristicas):
@@ -313,7 +311,7 @@ def fx_buscar_caracteristica(input_text, caracteristicas):
     for caracteristica in caracteristicas:
         if re.findall(input_text, caracteristica, re.IGNORECASE):
             lista.append(caracteristica)
-            
+
     return lista
 
 
@@ -321,7 +319,7 @@ def fx_buscar_caracteristica(input_text, caracteristicas):
 
 # # Solicitar entrada del usuario
 # caract = input("Ingrese una característica: ")
-# caract_encontrada = fx_buscar_caracteristica(caract, caracterisitcas)   
+# caract_encontrada = fx_buscar_caracteristica(caract, caracterisitcas)
 
 # if len(caract_encontrada) > 0:
 #     print("Opciones sugeridas:")
@@ -329,9 +327,8 @@ def fx_buscar_caracteristica(input_text, caracteristicas):
 #         print(item)
 # else:
 #     print("no se encontro esa caracteristica")
-    
-    
-    
+
+
 def fx_traer_caract(lista: list[dict], key: str) -> list:
     """
     esta funcion carga a una lista,
@@ -346,50 +343,43 @@ def fx_traer_caract(lista: list[dict], key: str) -> list:
 
     for item in lista:
         elemento.append(item[key])
-  
-    return elemento    
 
+    return elemento
 
 
 def fx_insumo_por_caracteristica(lista: dict[list]):
-    
-    
+
     caracteristicas = fx_traer_caract(lista, 'caracteristicas')
     lista_filtrada = []
     insumo_por_caracteristica = []
     lista_id = []
-    
+
     for item in caracteristicas:
         for item_2 in item:
-            lista_filtrada.append(item_2) 
-            
-    
+            lista_filtrada.append(item_2)
+
     caract = input("Ingrese una característica: ")
-    caract_encontrada = fx_buscar_caracteristica(caract, lista_filtrada)   
-    
-    
-    
-    if len(caract_encontrada) > 0:          
+    caract_encontrada = fx_buscar_caracteristica(caract, lista_filtrada)
+
+    if len(caract_encontrada) > 0:
         print('Insumo:')
         for caracteristica in caract_encontrada:
             for insumo in lista:
-             if caracteristica in insumo['caracteristicas']:
-                 id_insumo = insumo["id"]
-                 
-                 if id_insumo not in lista_id:
-                    print(f"| { insumo['marca']:^16}|{' ':^55} |\t\t|")
-                    nombre = insumo["nombre"]
-                    marca = insumo["marca"]
-                    lista_id.append(id_insumo)
-                    print(f"\t  {nombre}{marca} su caracteristica es {caracteristica}" )
+                if caracteristica in insumo['caracteristicas']:
+                    id_insumo = insumo["id"]
+
+                    if id_insumo not in lista_id:
+                        print(f"| { insumo['marca']:^16}|{' ':^55} |\t\t|")
+                        nombre = insumo["nombre"]
+                        marca = insumo["marca"]
+                        lista_id.append(id_insumo)
+                        print(
+                            f"\t  {nombre}{marca} su caracteristica es {caracteristica}")
     else:
         print("no se encontro esa caracteristica")
 
-    
 
-        
- 
-fx_insumo_por_caracteristica(archivo)        
+fx_insumo_por_caracteristica(archivo)
 
 # def eliminar_elementos(lista, patron):
 #     patron_regex = re.compile(patron)
