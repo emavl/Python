@@ -351,7 +351,7 @@ def fx_insumo_por_caracteristica(lista: dict[list]):
 
     caracteristicas = fx_traer_caract(lista, 'caracteristicas')
     lista_filtrada = []
-    insumo_por_caracteristica = []
+    error = "No se encontro esa caracteristica"
     lista_id = []
 
     for item in caracteristicas:
@@ -361,23 +361,29 @@ def fx_insumo_por_caracteristica(lista: dict[list]):
     caract = input("Ingrese una característica: ")
     caract_encontrada = fx_buscar_caracteristica(caract, lista_filtrada)
 
+    print(" "+"_"*120)
+    print(f"|{'Marca':^16}|\t\t\t\t\t{'C a r a c t e r i s t i c a ':^20}\t\t\t\t\t| ")
+    print(f" "+"─"*120)
+
     if len(caract_encontrada) > 0:
-        print('Insumo:')
         for caracteristica in caract_encontrada:
             for insumo in lista:
                 if caracteristica in insumo['caracteristicas']:
                     id_insumo = insumo["id"]
 
                     if id_insumo not in lista_id:
-                        print(f"| { insumo['marca']:^16}|{' ':^55} |\t\t|")
                         nombre = insumo["nombre"]
                         marca = insumo["marca"]
                         lista_id.append(id_insumo)
-                        print(
-                            f"\t  {nombre}{marca} su caracteristica es {caracteristica}")
+                        cadena = (f"{marca}")
+                        cadena2 = (f"{nombre} su caracteristica es {caracteristica}\t")
+                        # print(cadena+cadena2)
+                        print("|{:^16}| {:>98}|". format(cadena, cadena2))
+                        # print( f"|{marca:^16}|\t {nombre} su caracteristica es {caracteristica}\t|")
+                        
     else:
-        print("no se encontro esa caracteristica")
-
+        print( "|{:^119}|".format(error))
+    print(f""+"─"*120)
 
 fx_insumo_por_caracteristica(archivo)
 
