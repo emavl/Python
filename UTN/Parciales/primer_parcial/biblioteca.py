@@ -156,6 +156,92 @@ def fx_print_insumo_marca(insumos_por_marca: dict[list]) -> None:
         print(f"─"*88)
 
 
+def fx_traer_caract(lista: list[dict], key: str) -> list:
+    """
+    esta funcion carga a una lista,
+    la caracteristica indicada por el usuario.
+
+    Args:   list -> lista recibida por parametros 
+
+    return -> Listado de las caracteristicas
+
+    """
+    elemento = []
+
+    for item in lista:
+        elemento.append(item[key])
+
+    return elemento
+
+
+def fx_buscar_caracteristica(input_text, caracteristicas):
+
+    lista = []
+    for caracteristica in caracteristicas:
+        if re.findall(input_text, caracteristica, re.IGNORECASE):
+            lista.append(caracteristica)
+
+    return lista
+
+
+def fx_input_caracteristica(lista_1: list, lista_2: list) -> None:
+
+    lista_id = []
+    error = "No se encontro esa caracteristica"
+
+    caract = input("\nIngrese una característica: ")
+    caract_encontrada = fx_buscar_caracteristica(caract, lista_1)
+
+    print(" "+"_"*126)
+    print(
+        f"|{'M a r c a':^16}|\t\t\t\t\t{'C a r a c t e r i s t i c a ':^30}\t\t\t\t\t\t| ")
+    print(f" "+"─"*126)
+
+    if len(caract_encontrada) > 0:
+        for caracteristica in caract_encontrada:
+            for insumo in lista_2:
+                if caracteristica in insumo['caracteristicas']:
+                    id_insumo = insumo["id"]
+
+                    if id_insumo not in lista_id:
+                        nombre = insumo["nombre"]
+                        marca = insumo["marca"]
+                        lista_id.append(id_insumo)
+                        cadena = (f"{marca}")
+                        cadena1 = (
+                            f"{nombre} su caracteristica es {caracteristica}\t")
+                        print("|{:^16}| {:>105}|". format(cadena, cadena1))
+
+    else:
+        print("|{:^119}|".format(error))
+    print(f""+"─"*128)
+
+
+def fx_print_caracteristicas(lista_1: list[list], lista_2: list) -> None:
+
+    lista_filtrada = []
+
+    resp = "no"
+
+    for item in lista_1:
+        for item_2 in item:
+            lista_filtrada.append(item_2)
+
+    while True:
+        fx_input_caracteristica(lista_filtrada, lista_2)
+
+        resp = input("¿Desea buscar otra caracteristica? (si/no):")
+
+        if resp.lower() == "no":
+            break
+
+
+def fx_insumo_por_caracteristica(lista: dict[list]) -> None:
+
+    caracteristicas = fx_traer_caract(lista, 'caracteristicas')
+    fx_print_caracteristicas(caracteristicas, lista)
+
+
 def fx_ejecutar_menu() -> int:
     """
     Menú principal con diferentes tipos de opcíones numericas
@@ -305,16 +391,6 @@ archivo = fx_normalizar_datos(insumo_csv)
 # app_insumos(insumo_csv)
 
 
-def fx_buscar_caracteristica(input_text, caracteristicas):
-
-    lista = []
-    for caracteristica in caracteristicas:
-        if re.findall(input_text, caracteristica, re.IGNORECASE):
-            lista.append(caracteristica)
-
-    return lista
-
-
 # caracterisitcas = ["color", "size","Resolución Full HD", "500gb", "compatible con linux", "compatible con windows"]
 
 # # Solicitar entrada del usuario
@@ -329,71 +405,4 @@ def fx_buscar_caracteristica(input_text, caracteristicas):
 #     print("no se encontro esa caracteristica")
 
 
-def fx_traer_caract(lista: list[dict], key: str) -> list:
-    """
-    esta funcion carga a una lista,
-    la caracteristica indicada por el usuario.
-
-    Args:   list -> lista recibida por parametros 
-
-    return -> Listado de las caracteristicas
-
-    """
-    elemento = []
-
-    for item in lista:
-        elemento.append(item[key])
-
-    return elemento
-
-
-def fx_insumo_por_caracteristica(lista: dict[list]):
-
-    caracteristicas = fx_traer_caract(lista, 'caracteristicas')
-    lista_filtrada = []
-    error = "No se encontro esa caracteristica"
-    lista_id = []
-
-    for item in caracteristicas:
-        for item_2 in item:
-            lista_filtrada.append(item_2)
-
-    caract = input("Ingrese una característica: ")
-    caract_encontrada = fx_buscar_caracteristica(caract, lista_filtrada)
-
-    print(" "+"_"*120)
-    print(f"|{'Marca':^16}|\t\t\t\t\t{'C a r a c t e r i s t i c a ':^20}\t\t\t\t\t| ")
-    print(f" "+"─"*120)
-
-    if len(caract_encontrada) > 0:
-        for caracteristica in caract_encontrada:
-            for insumo in lista:
-                if caracteristica in insumo['caracteristicas']:
-                    id_insumo = insumo["id"]
-
-                    if id_insumo not in lista_id:
-                        nombre = insumo["nombre"]
-                        marca = insumo["marca"]
-                        lista_id.append(id_insumo)
-                        cadena = (f"{marca}")
-                        cadena2 = (f"{nombre} su caracteristica es {caracteristica}\t")
-                        # print(cadena+cadena2)
-                        print("|{:^16}| {:>98}|". format(cadena, cadena2))
-                        # print( f"|{marca:^16}|\t {nombre} su caracteristica es {caracteristica}\t|")
-                        
-    else:
-        print( "|{:^119}|".format(error))
-    print(f""+"─"*120)
-
 fx_insumo_por_caracteristica(archivo)
-
-# def eliminar_elementos(lista, patron):
-#     patron_regex = re.compile(patron)
-#     lista_filtrada = [elemento for elemento in lista if not patron_regex.search(elemento)]
-#     return lista_filtrada
-
-# # Ejemplo de uso
-# mi_lista = ['apple [fruit]', 'banana', 'orange [fruit]', 'grape [fruit]']
-
-# lista_filtrada = eliminar_elementos(mi_lista, r'\[.*\]')
-# print(lista_filtrada)
