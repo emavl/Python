@@ -156,6 +156,9 @@ def fx_print_insumo_marca(insumos_por_marca: dict[list]) -> None:
         print(f"─"*88)
 
 
+# ---------------------- C a r a c t e r i s t i c a s  -----------------------------------
+
+
 def fx_traer_caract(lista: list[dict], key: str) -> list:
     """
     esta funcion carga a una lista,
@@ -166,12 +169,14 @@ def fx_traer_caract(lista: list[dict], key: str) -> list:
     return -> Listado de las caracteristicas
 
     """
-    elemento = []
+    # elemento = []
 
-    for item in lista:
-        elemento.append(item[key])
+    # for item in lista:
+    #     elemento.append(item[key])
 
-    return elemento
+    # return elemento
+    
+    return list(map(lambda item: item[key], lista) )
 
 
 def fx_buscar_caracteristica(input_text, caracteristicas):
@@ -184,13 +189,10 @@ def fx_buscar_caracteristica(input_text, caracteristicas):
     return lista
 
 
-def fx_input_caracteristica(lista_1: list, lista_2: list) -> None:
+def print_caracterisiticas(caract_encontrada, lista_2):
 
     lista_id = []
     error = "No se encontro esa caracteristica"
-
-    caract = input("\nIngrese una característica: ")
-    caract_encontrada = fx_buscar_caracteristica(caract, lista_1)
 
     print(" "+"_"*126)
     print(
@@ -217,29 +219,81 @@ def fx_input_caracteristica(lista_1: list, lista_2: list) -> None:
     print(f""+"─"*128)
 
 
-def fx_print_caracteristicas(lista_1: list[list], lista_2: list) -> None:
+def fx_input_caracteristica(lista_1: list, lista_2: list) -> None:
+
+    caract = input("\nIngrese una característica: ")
+    caract_encontrada = fx_buscar_caracteristica(caract, lista_1)
+    print_caracterisiticas(caract_encontrada, lista_2)
+
+
+def fx_caracteristicas(lista_1: list[list], lista_2: list) -> None:
 
     lista_filtrada = []
 
-    resp = "no"
+    resp = "si"
 
     for item in lista_1:
         for item_2 in item:
             lista_filtrada.append(item_2)
 
-    while True:
+    while resp.lower() == "si":
+
         fx_input_caracteristica(lista_filtrada, lista_2)
 
-        resp = input("¿Desea buscar otra caracteristica? (si/no):")
-
-        if resp.lower() == "no":
-            break
+        resp = input("\n¿Desea buscar otra caracteristica? (si/no):")
+        while resp != "si" and resp != "no":
+            resp = input("\nError, responda por si o por no, gracias")
 
 
 def fx_insumo_por_caracteristica(lista: dict[list]) -> None:
 
     caracteristicas = fx_traer_caract(lista, 'caracteristicas')
-    fx_print_caracteristicas(caracteristicas, lista)
+    fx_caracteristicas(caracteristicas, lista)
+
+
+# ------------------------- O r d e n a m i e n t o  ---------------------------------------
+
+
+def fx_ordenamiento(lista: list[dict], key_1: str, key_2: str) -> list:
+    """ Ordenamiento de doble criterio, de la lista pasada por parametros. 
+    Args:
+        lista (list[dict]): lista a ordenar
+        key_1 (str): primer criterio
+        key_2 (str): segundo criterio
+
+    Returns:
+        list: lista ordenada
+    """
+    for i in range(len(lista)-1):
+        for j in range(i+1, len(lista)):
+            if lista[i][key_1] > lista[j][key_1] or (lista[i][key_1] == lista[j][key_1] and lista[i][key_2] < lista[j][key_2]):
+                lista[i], lista[j] = lista[j], lista[i]
+
+    return lista
+
+
+def fx_print_ordenamiento(lista: list[dict], key_1: str, key_2: str) -> None:
+    """ Imprsión del ordenamiento propio de la lista pasada por parametros.
+
+    Args:
+        lista (list[dict]): lista ordenada.
+        key_1 (str): primer criterio.
+        key_2 (str): segundo criterio.
+    """
+
+    lista_ordenada = fx_ordenamiento(lista, key_1, key_2)
+
+    print(" "+"_"*143)
+    print(f"|{'ID':^4}|\t{'N o m b r e ':^53}|{'M a r c a':^18}|{'Precio':^10}|{'C a r a c t e r i s i t c a s':^50} |")
+    print(f" "+"─"*143)
+
+    for item in lista_ordenada:
+        print(
+            f"|{item['id']:>4}|{item['nombre']:^55}|{item['marca']:^18}| ${item['precio']:>8}|{item['caracteristicas'][0]:>50} |")
+        print(f"|"+"─"*143)
+
+
+# --------------------------->  A p p   P r i n c i p a l
 
 
 def fx_ejecutar_menu() -> int:
@@ -325,7 +379,44 @@ def opcion_3(lista: list, flag: bool) -> bool:
         fx_insumos_por_marca(lista)
     else:
         print("Por favor debe de cargan los datos desde el archivo\npara poder listar insumos por marca.")
+
     limpiar_consola()
+
+
+def opcion_4(lista: list, flag: bool) -> bool:
+    """
+    funcion que contiene un conjunto de fx. 
+
+    Args:
+    lista (list) -> archivo csv pasado por argumento.
+    flag (bool) -> bandera para cambiar un estado.
+
+    """
+
+    system("cls")
+    if (flag):
+        fx_insumo_por_caracteristica(lista)
+    else:
+        print("Por favor debe de cargan los datos desde el archivo\npara poder listar insumos por caracteristica.")
+    limpiar_consola()
+
+
+def opcion_5(lista: list, flag: bool) -> bool:
+    """ funcion que contiene un conjunto de fx. 
+
+    Args:
+        lista (list) -> archivo csv pasado por argumento.
+        flag (bool) -> bandera para cambiar un estado.
+
+    """
+
+    system("cls")
+    if (flag):
+        fx_print_ordenamiento(lista, 'marca', 'precio')
+    else:
+        print("Por favor debe de cargan los datos desde el archivo\npara poder listar insumos ordenados.")
+    limpiar_consola()
+
 
 # ----------------------- M e n ú   -   P r i n c i p a l  -----------------------
 
@@ -342,16 +433,10 @@ def app_insumos(insumos: list):
                 opcion_2(insumos, flag)
             case 3:
                 opcion_3(insumos, flag)
-            # case 4:
-            #     if(flag):
-            #         pass
-            #     else:
-            #         print("No se puede buscar insumo por caracteristica si primero no se cargan los datos desde el archivo.")
-            # case 5:
-            #     if(flag):
-            #         pass
-            #     else:
-            #         print("No se puede listar insumos ordenados si primero no se cargan los datos desde el archivo.")
+            case 4:
+                opcion_4(insumos, flag)
+            case 5:
+                opcion_5(insumos, flag)
             # case 6:
             #     if(flag):
             #         pass
@@ -385,24 +470,12 @@ def app_insumos(insumos: list):
 # -------------------------------------------------------------------------------------------------------
 
 
-archivo = fx_normalizar_datos(insumo_csv)
+app_insumos(insumo_csv)
+
+# lista = fx_normalizar_datos(insumo_csv)
+# print()
+# print()
+# system("cls")
 
 
-# app_insumos(insumo_csv)
-
-
-# caracterisitcas = ["color", "size","Resolución Full HD", "500gb", "compatible con linux", "compatible con windows"]
-
-# # Solicitar entrada del usuario
-# caract = input("Ingrese una característica: ")
-# caract_encontrada = fx_buscar_caracteristica(caract, caracterisitcas)
-
-# if len(caract_encontrada) > 0:
-#     print("Opciones sugeridas:")
-#     for item in caract_encontrada:
-#         print(item)
-# else:
-#     print("no se encontro esa caracteristica")
-
-
-fx_insumo_por_caracteristica(archivo)
+# fx_insumo_por_caracteristica(lista)
