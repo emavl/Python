@@ -14,6 +14,33 @@ def limpiar_consola() -> None:
     system("pause")
     system("cls")
 
+
+def pedir_texto(mensaje: str, mensaje_error: str) -> str:
+    """chequea que el texto igresado
+    por el usuario no contenga numeros,
+    espacio o salto de linea, retornando el texto.
+
+    Arg:
+        mensaje (str) ──► Peticion del usuario en formato string.
+        mensaje_error (str) ──► Error del dato ingresado.
+
+    Return:
+        Texto (str) ──► El string ingresado.
+    """
+    while True:
+        try:
+            texto = input(mensaje)
+            size = texto.split()
+            for i in size:
+                if i.isalpha():
+                    break
+                raise ValueError
+            break
+        except ValueError:
+            print(mensaje_error)
+
+    return texto
+
 # A r c h i v o
 
 
@@ -116,7 +143,7 @@ def fx_cargar_marca(lista: dict[list]) -> dict[list]:
     a un diccionario.
 
     Args:
-    lista (dict[list]) -> archivo csv pasado por
+    lista (dict[list]) -> lista
     return (dict) -> diccionario
     """
     diccionario = {}
@@ -160,26 +187,29 @@ def fx_print_insumo_marca(insumos_por_marca: dict[list]) -> None:
 
 
 def fx_traer_caract(lista: list[dict], key: str) -> list:
+    """ para cada elemento 'item' en la lista,
+    la funcion lambda devuelve el valor  de la clave key
+    pasada por parametro.
+
+    Args:   list -> lista recibida por parametros. 
+
+    return -> Listado de listas con las caracteristicas.
+
     """
-    esta funcion carga a una lista,
-    la caracteristica indicada por el usuario.
+    return list(map(lambda item: item[key], lista))
 
-    Args:   list -> lista recibida por parametros 
 
-    return -> Listado de las caracteristicas
+def fx_buscar_caracteristica(input_text: str, caracteristicas: list) -> list:
+    """ Busca dentro de la lista la caracteristica
+    pasada por parametro input_text.
 
+    Args:
+        input_text (str): _description_
+        caracteristicas (list): _description_
+
+    Returns:
+        list: _description_
     """
-    # elemento = []
-
-    # for item in lista:
-    #     elemento.append(item[key])
-
-    # return elemento
-    
-    return list(map(lambda item: item[key], lista) )
-
-
-def fx_buscar_caracteristica(input_text, caracteristicas):
 
     lista = []
     for caracteristica in caracteristicas:
@@ -189,8 +219,13 @@ def fx_buscar_caracteristica(input_text, caracteristicas):
     return lista
 
 
-def print_caracterisiticas(caract_encontrada, lista_2):
+def print_caracterisiticas(caract_encontrada: str, lista_2: list) -> None:
+    """ Imprime las caracteristicas encontradas.
 
+    Args:
+        caract_encontrada (str): caracteristica
+        lista_2 (list): lista
+    """
     lista_id = []
     error = "No se encontro esa caracteristica"
 
@@ -220,14 +255,26 @@ def print_caracterisiticas(caract_encontrada, lista_2):
 
 
 def fx_input_caracteristica(lista_1: list, lista_2: list) -> None:
+    """ Conjunto de funciones que trabajan con la lista filtrada
+    y la lista completa, donde el usuario ingresada la caracteristica a buscar. 
 
-    caract = input("\nIngrese una característica: ")
-    caract_encontrada = fx_buscar_caracteristica(caract, lista_1)
+    Args:
+        lista_1 (list): lista filtrada.
+        lista_2 (list): lista completa.
+    """
+    input_text = input("\nIngrese una característica: ")
+    caract_encontrada = fx_buscar_caracteristica(input_text, lista_1)
     print_caracterisiticas(caract_encontrada, lista_2)
 
 
 def fx_caracteristicas(lista_1: list[list], lista_2: list) -> None:
+    """ Filtra en una lista, el listado de listas con las caracteristicas.
+    para ser usada en la fx input_caracteristica()
 
+    Args:
+        lista_1 (list[list]): Listado de listas con las caracteristicas.
+        lista_2 (list): Lista completa. 
+    """
     lista_filtrada = []
 
     resp = "si"
@@ -246,7 +293,12 @@ def fx_caracteristicas(lista_1: list[list], lista_2: list) -> None:
 
 
 def fx_insumo_por_caracteristica(lista: dict[list]) -> None:
+    """ Conjunto de funciones para listar las caracteristicas de los insumos
+    buscada por el usuario. 
 
+    Args:
+        lista (dict[list]): Lista 
+    """
     caracteristicas = fx_traer_caract(lista, 'caracteristicas')
     fx_caracteristicas(caracteristicas, lista)
 
@@ -317,6 +369,7 @@ def fx_ejecutar_menu() -> int:
                                      " 9) Actualizar precios.\n"
                                      " 10) Agregar nuevo producto.\n"
                                      " 11) Salir\n"
+                                     "=================================\n"
                                      "\n opcion n° ────► ",
                                      "\nError, no contamos con esa opción ‼ \n", 1, 11)
 
@@ -421,7 +474,12 @@ def opcion_5(lista: list, flag: bool) -> bool:
 # ----------------------- M e n ú   -   P r i n c i p a l  -----------------------
 
 
-def app_insumos(insumos: list):
+def app_insumos(insumos) -> None:
+    """ Programa principal
+
+    Args:
+        insumos (list): Archivo CSV 
+    """    
     flag = False
 
     while True:
@@ -470,12 +528,73 @@ def app_insumos(insumos: list):
 # -------------------------------------------------------------------------------------------------------
 
 
-app_insumos(insumo_csv)
+# app_insumos(insumo_csv)
 
-# lista = fx_normalizar_datos(insumo_csv)
-# print()
-# print()
-# system("cls")
+lista = fx_normalizar_datos(insumo_csv)
+print()
+print()
+system("cls")
+
+# Realizar compras: A partir del ingreso de una marca, el programa mostrará todos los productos de esa marca. 
+# El usuario elegirá un producto y la cantidad y se agrega al carrito de compras.
+# Esta acción se repetirá mientras el usuario lo desee (con distintas marcas). 
+# Al finalizar mostrar el total de la compra. Si el usuario acepta la misma se deberá generar un archivo txt con la factura de la compra.
+# Indicando cantidad, producto, subtotal y total de la compra.
 
 
-# fx_insumo_por_caracteristica(lista)
+
+
+# # ----------------------------------------------------------------    
+lista_de_marcas = list(map(lambda item : item['marca'], lista))
+lista_de_marcas = ", ".join(lista_de_marcas)
+
+marca_elejida = pedir_texto(
+    "Ingrese la marca del producto que quiere comprar: "," Error de tipero, intentelo nuevamente ").capitalize()
+
+if re.findall(marca_elejida, lista_de_marcas, re.IGNORECASE):
+    elementos_agrupados = list(filter(lambda item: item["marca"] == marca_elejida, lista))
+    print(f"Productos de la marca {marca_elejida}")
+    for marca in elementos_agrupados:
+            print(f"\t────> {marca['nombre']}")
+    
+    
+else:
+    print("No se encuentra la marca del producto")
+
+system('pause')
+
+# for item in elementos_agrupados:
+#     print(item)
+
+
+
+ 
+# for elemento in lista:
+#     if elemento['marca'] == 'Samsung':
+#         print(elemento.get('nombre'))
+    
+marcas = list(map(lambda item: item['marca'], lista))   
+
+
+# lista_productos = []
+
+lista_marcas = ",".join(marcas)
+
+
+marca_elejida = input("Ingrese la marca del producto : ")
+marca_filtrada = re.search( marca_elejida, lista_marcas, re.IGNORECASE)
+if marca_filtrada:
+    marca = marca_filtrada.group()
+    print("La marca coincide:", marca)
+else:
+    print("No se encontró ninguna coincidencia de marca.")
+    
+# marcas_seleccionadas = list(filter(lambda item: item == marca_elejida, marcas))
+
+
+# print(marcas_seleccionadas)
+
+
+
+           
+         
