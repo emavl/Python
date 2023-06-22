@@ -1,5 +1,6 @@
 from os import system
 import re
+import random
 insumo_csv = ("Parciales/primer_parcial/insumos.csv")
 system("cls")
 
@@ -41,7 +42,43 @@ def pedir_texto(mensaje: str, mensaje_error: str) -> str:
 
     return texto
 
-# A r c h i v o
+
+def pedir_numero(mensaje: str, mensaje_error: str) -> int:
+    """
+    Peticion al usuario de un numero
+
+    arg:
+
+    mensaje (str) -> Mensaje del usuario para peticion de datos.
+    mensaje_error (str) -> mensaje de error
+
+    """
+    while True:
+        try:
+            num = input(mensaje)
+            if num.isalpha:
+                num = int(num)
+                raise ValueError
+            break
+        except ValueError:
+            print(mensaje_error)
+
+    return num
+
+# ------- D a t o s   n o r m a l i z a d o s --------------
+
+
+def fx_stock_disponible(lista: list[dict]) -> list[dict]:
+    """ Agrego una clave 'stock' y un valor int, random
+    a cada diccionario de la lista. 
+
+    Args:
+        lista (list[dict]): lista de diccionarios.
+
+    Returns:
+        list[dict]: Lista de diccionarios.
+    """
+    return list(map(lambda producto: {**producto, 'stock': int(random.randint(0, 10))}, lista))
 
 
 def fx_normalizar_datos(lista: str) -> list:
@@ -55,6 +92,7 @@ def fx_normalizar_datos(lista: str) -> list:
     primera = True
     insumos = []
     with open(lista, encoding="utf8") as archivo:
+
         for linea in archivo:
             if primera:
                 lista = linea
@@ -63,8 +101,9 @@ def fx_normalizar_datos(lista: str) -> list:
                 campos = re.findall(r'[^",\n]+', linea)
                 id = int(campos[0])
                 nombre = campos[1]
-                marca = campos[2].strip()
+                marca = campos[2].strip().capitalize()
                 precio = float(campos[3].replace('$', ''))
+                # stock = list(map(lambda _: random.randint(0, 10), range(5)))
                 caracteristicas = campos[4].split("|!*|")
                 insumo = {'id': id, 'nombre': nombre, 'marca': marca,
                           'precio': precio, 'caracteristicas': caracteristicas}
@@ -75,6 +114,8 @@ def fx_normalizar_datos(lista: str) -> list:
 
     return insumos
 
+
+# --------------- Fx aplicadas a los insumos ----------------
 
 def fx_cantidad_marcas(lista: list):
     """
@@ -393,6 +434,7 @@ def opcion_1(lista: list, flag: bool):
     """
     system("cls")
     insumos = fx_normalizar_datos(lista)
+    insumos = fx_stock_disponible(insumos)
     flag = True
     limpiar_consola()
 
@@ -479,7 +521,7 @@ def app_insumos(insumos) -> None:
 
     Args:
         insumos (list): Archivo CSV 
-    """    
+    """
     flag = False
 
     while True:
@@ -531,70 +573,75 @@ def app_insumos(insumos) -> None:
 # app_insumos(insumo_csv)
 
 lista = fx_normalizar_datos(insumo_csv)
-print()
-print()
-system("cls")
+lista = fx_stock_disponible(lista)
+# print()
+# print()
+# system("cls")
 
-# Realizar compras: A partir del ingreso de una marca, el programa mostrará todos los productos de esa marca. 
+
+# print(nueva_lista)
+
+
+# Realizar compras: A partir del ingreso de una marca, el programa mostrará todos los productos de esa marca.
 # El usuario elegirá un producto y la cantidad y se agrega al carrito de compras.
-# Esta acción se repetirá mientras el usuario lo desee (con distintas marcas). 
+# Esta acción se repetirá mientras el usuario lo desee (con distintas marcas).
 # Al finalizar mostrar el total de la compra. Si el usuario acepta la misma se deberá generar un archivo txt con la factura de la compra.
 # Indicando cantidad, producto, subtotal y total de la compra.
 
 
+# # ----------------------------------------------------------------
+
+print("=========================================================\n"
+      "        ♦ - Bienvenido al sector de compras  - ♦       \n"
+      "=========================================================\n")
 
 
-# # ----------------------------------------------------------------    
-lista_de_marcas = list(map(lambda item : item['marca'], lista))
-lista_de_marcas = ", ".join(lista_de_marcas)
+resp = "si"
 
-marca_elejida = pedir_texto(
-    "Ingrese la marca del producto que quiere comprar: "," Error de tipero, intentelo nuevamente ").capitalize()
+lista_de_compras = []
 
-if re.findall(marca_elejida, lista_de_marcas, re.IGNORECASE):
-    elementos_agrupados = list(filter(lambda item: item["marca"] == marca_elejida, lista))
-    print(f"Productos de la marca {marca_elejida}")
-    for marca in elementos_agrupados:
-            print(f"\t────> {marca['nombre']}")
-    
-    
-else:
-    print("No se encuentra la marca del producto")
+while resp.lower() == "si":
 
-system('pause')
+    marca_elegida = pedir_texto("\nPor favor, ingrese la marca del producto: ",
+                                "Error de tipo, inténtelo nuevamente ").capitalize()
 
-# for item in elementos_agrupados:
-#     print(item)
+    lista_de_marcas = list(
+        filter(lambda item: item['marca'] == marca_elegida, lista))
 
+    # print(lista_de_marcas)
+    # print()
+    # print(lista_de_productos)
 
+    if len(lista_de_marcas) == 0:
+        print("no se encontro ninguna marca")
+        break
 
- 
-# for elemento in lista:
-#     if elemento['marca'] == 'Samsung':
-#         print(elemento.get('nombre'))
-    
-marcas = list(map(lambda item: item['marca'], lista))   
+    print(f"\nProductos de la marca {marca_elegida}")
+    for marca in lista_de_marcas:
+        print(f"\t────> {marca['nombre']}")
 
+    producto_elegido = pedir_texto("\nPor favor, ingrese el producto que desea : ",
+                                   "Error de tipo, inténtelo nuevamente ")
 
-# lista_productos = []
+    cantidad = int(
+        input(f"\n¿Del producto ({producto_elegido}), cuantos va a necesitar? "))
 
-lista_marcas = ",".join(marcas)
+    for producto in lista_de_marcas:
+        if producto['nombre'] == producto_elegido:
+            print(
+                f"\n La marca {producto['marca']}, el producto es {producto['nombre']} cantidad que contamos {producto['stock']}")
+            print(type(producto['stock']))
+            if cantidad > producto['stock']:
+                print("\nno contamos con esa cantidad ")
+            else:
+                producto['stock'] -= cantidad
+                listado = {'marca': marca_elegida,
+                           'Producto': producto_elegido, 'cantidad': cantidad}
+                lista_de_compras.append(listado)
 
+    for item in lista_de_compras:
+        print(f"{item['marca']:^5},{item['Producto']:^5},{item['cantidad']:^5}")
 
-marca_elejida = input("Ingrese la marca del producto : ")
-marca_filtrada = re.search( marca_elejida, lista_marcas, re.IGNORECASE)
-if marca_filtrada:
-    marca = marca_filtrada.group()
-    print("La marca coincide:", marca)
-else:
-    print("No se encontró ninguna coincidencia de marca.")
-    
-# marcas_seleccionadas = list(filter(lambda item: item == marca_elejida, marcas))
-
-
-# print(marcas_seleccionadas)
-
-
-
-           
-         
+    resp = input("\n¿ Desea comprar otro producto ? (si/no): ")
+    while resp.lower() not in ["si", "no"]:
+        resp = input("\nError, responda 'si' o 'no': ")
