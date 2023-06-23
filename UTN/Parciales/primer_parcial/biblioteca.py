@@ -1,5 +1,7 @@
 from os import system
-import re, random, functools
+import re
+import random
+import functools
 
 insumo_csv = ("Parciales/primer_parcial/insumos.csv")
 system("cls")
@@ -421,6 +423,104 @@ def fx_ejecutar_menu() -> int:
     return opcion
 
 
+# ------------------------- C o m p r a s  ---------------------------------------
+def fx_print_compras(lista_de_compras: list):
+    """funcion que imprime por consola los productos.
+
+    Args:
+        lista_de_compras (list): listado de productos.
+    """
+    total = 0
+
+    print("\nProductos ingresados")
+
+    for producto_encontrado in lista_de_compras:
+        total += producto_encontrado['precio']
+        print(
+            f"\tMarca: {producto_encontrado['marca']:^5}, producto: {producto_encontrado['Producto']:^5}, cantidad:{producto_encontrado['cantidad']:^3}, $:{producto_encontrado['precio']:^5} ")
+
+    print(f"\nTotal - ${total}")
+
+
+def fx_carrito_de_compras(lista_principal: list) -> list:
+    """ funcion que agrega los productos seleccionados por el usuario
+
+    Args:
+        lista_principal (list): lista principal
+
+    Returns:
+        lista_de_compras(list): lista con los productos.
+    """
+    resp = "si"
+    lista_de_compras = []
+    listado = []
+
+    while resp.lower() == "si":
+
+        marca_elegida = pedir_texto("\nPor favor, ingrese la marca del producto: ",
+                                    "Error de tipo, inténtelo nuevamente ").capitalize()
+        system('cls')
+
+        lista_de_marcas = list(
+            filter(lambda item: item['marca'] == marca_elegida, lista_principal))
+
+        if len(lista_de_marcas) == 0:
+            print(f"No contamos con la marca {marca_elegida}")
+            break
+
+        print(
+            f"\nContamos con los siguientes productos de la marca {marca_elegida}\n")
+
+        for marca in lista_de_marcas:
+            print(
+                f"\t────> {marca['nombre']} - ${marca['precio']:^5}, ")
+
+        producto_elegido = pedir_texto("\nPor favor, ingrese el producto que desea : ",
+                                       "Error de tipo, inténtelo nuevamente ")
+
+        cantidad = pedir_numero((f"\n¿Del producto ♪ {producto_elegido} ♫, cuantos va a necesitar? "),
+                                "\nError de tipeo ingrese un numero por favor, gracias !")
+
+        for producto in lista_de_marcas:
+            if producto['nombre'] == producto_elegido:
+                if cantidad > producto['stock']:
+                    print(
+                        f"\n El producto {producto['nombre']}, de la marca {producto['marca']}, no contamos con la cantidad que usted solicita")
+                else:
+                    if producto_elegido in lista_de_compras:
+                        cantidad = pedir_numero((f"\n¿Su carrito cuenta con {producto_elegido} necesita mas? "),
+                                                "\nError de tipeo ingrese un numero por favor, gracias !")
+                    else:
+                        precio = producto['precio']
+                        producto['stock'] -= cantidad
+                        listado = {'marca': marca_elegida,
+                                   'Producto': producto_elegido,
+                                   'cantidad': cantidad,
+                                   'precio': (cantidad * precio)}
+                        lista_de_compras.append(listado)
+
+        resp = input("\n¿ Desea comprar otro producto ? (si/no): ")
+        while resp.lower() not in ["si", "no"]:
+            resp = input("\nError, responda 'si' o 'no': ")
+
+    return lista_de_compras
+
+
+def fx_compras(lista_principal: list[dict]):
+    """ conjunto de fx para el ingreso al carrito
+
+    Args:
+        lista_principal (list[dict]): lista principal.
+    """
+    print("=========================================================\n"
+          "        ♦ - Bienvenido al sector de compras  - ♦       \n"
+          "=========================================================\n")
+
+    lista_de_compras = fx_carrito_de_compras(lista_principal)
+
+    fx_print_compras(lista_de_compras)
+
+
 # --------------- F u n c i o n e s     s i m p l e s -------------------
 
 
@@ -578,210 +678,3 @@ def app_insumos(insumos) -> None:
 
 lista = fx_normalizar_datos(insumo_csv)
 lista = fx_stock_disponible(lista)
-# print()
-# print()
-# system("cls")
-
-
-# print(nueva_lista)
-
-
-# Al finalizar mostrar el total de la compra. Si el usuario acepta la misma se deberá generar un archivo txt con la factura de la compra.
-# Indicando cantidad, producto, subtotal y total de la compra.
-
-
-# # ----------------------------------------------------------------
-
-
-total = 0
-resp = "si"
-flag = True
-lista_de_compras = []
-listado = []
-
-while resp.lower() == "si":
-
-    marca_elegida = pedir_texto("\nPor favor, ingrese la marca del producto: ",
-                                "Error de tipo, inténtelo nuevamente ").capitalize()
-    system('cls')
-
-    lista_de_marcas = list(
-        filter(lambda item: item['marca'] == marca_elegida, lista))
-
-    if len(lista_de_marcas) == 0:
-        print(f"No contamos con la marca {marca_elegida}")
-        break
-
-    print(f"\nContamos con los siguientes productos de la marca {marca_elegida}\n")
-
-    for marca in lista_de_marcas:
-        print(f"\t────> {marca['nombre']} - ${marca['precio']:^5}, ")
-
-    producto_elegido = pedir_texto("\nPor favor, ingrese el producto que desea : ",
-                                   "Error de tipo, inténtelo nuevamente ")
-
-    
-    cantidad = pedir_numero((f"\n¿Del producto ♪ {producto_elegido} ♫, cuantos va a necesitar? "),
-                            "\nError de tipeo ingrese un numero por favor, gracias !")
-   #---------------------------------------------------------------- 
-    for producto in lista_de_marcas:
-        if producto['nombre'] == producto_elegido:
-            if cantidad > producto['stock']:
-                print(f"\n El producto {producto['nombre']}, de la marca {producto['marca']}, no contamos con la cantidad que usted solicita")
-            else:
-                for item in lista_de_compras:
-                    if item in lista_de_compras:
-                        cantidad = pedir_numero(f"\n¿Su carrito cuenta con {producto_elegido}? ¿Necesita más? ",
-                                            "\nError de tipeo. Ingrese un número por favor.")
-                        if cantidad > producto['stock']:
-                            print(f"\n El producto {producto['nombre']}, de la marca {producto['marca']}"
-                                  ", no contamos con la cantidad que usted solicita")
-                        else:
-                            del producto['cantidad']
-                            producto['cantidad'] = cantidad    
-                        
-                precio = producto['precio']
-                producto['stock'] -= cantidad
-                listado = {'marca': marca_elegida,
-                        'Producto': producto_elegido,
-                        'cantidad': cantidad,
-                        'precio': precio}
-                lista_de_compras.append(listado)
-                
-
-   #---------------------------------------------------------------- 
-    # for producto in lista_de_marcas:
-    #     if producto['nombre'] == producto_elegido:
-    #         if cantidad > producto['stock']:
-    #             print(
-    #                 f"\n El producto {producto['nombre']}, de la marca {producto['marca']}, no contamos con la cantidad que usted solicita")
-    #         else:
-    #             if producto_elegido in lista_de_compras:
-    #                 cantidad = pedir_numero((f"\n¿Su carrito cuenta con {producto_elegido} necesita mas? "),
-    #                         "\nError de tipeo ingrese un numero por favor, gracias !")
-    #             else:    
-    #                 precio = producto['precio']
-    #                 producto['stock'] -= cantidad
-    #                 listado = {'marca': marca_elegida,
-    #                         'Producto': producto_elegido,
-    #                         'cantidad': cantidad,
-    #                         'precio': precio}
-    #                 lista_de_compras.append(listado)
-    print(lista_de_compras)               
-
-    # system('cls')
-    resp = input("\n¿ Desea comprar otro producto ? (si/no): ")
-    while resp.lower() not in ["si", "no"]:
-        resp = input("\nError, responda 'si' o 'no': ")
-
-print("\nProductos ingresados")
-
-for producto_encontrado in lista_de_compras:
-    costo = producto_encontrado['cantidad'] * producto_encontrado['precio']
-    total += costo
-    print(
-        f"\tMarca: {producto_encontrado['marca']:^5}, producto: {producto_encontrado['Producto']:^5}, cantidad:{producto_encontrado['cantidad']:^3}, $:{costo:^5} ")
-
-print(f"\nTotal - ${total}")
-
-##############################################################################
-
-# def actualizar_campo(lista_de_compras: list, key: str) -> int:
-#     return functools.reduce(lambda acc, producto: acc + producto[key], lista_de_compras['productos'], 0)
-
-# def fx_4(lista_de_compras: list):
-
-#     print("\nProductos ingresados")
-
-#     for item in lista_de_compras:
-#         costo = item['cantidad'] * item['precio']
-#         total += costo
-#         print(
-#             f"\tMarca: {item['marca']:^5}, producto: {item['Producto']:^5}, cantidad:{item['cantidad']:^3}, $:{costo:^5} ")
-
-#     print(f"\nTotal - ${total}")
-
-
-# def fx_3(lista_de_marcas: list, producto_elegido: str, cantidad: int):
-            
-#     carrito_de_compras = {
-#         'productos': [],
-#         'cantidad': 0,
-#         'total': 0,
-#     }
-    
-#     for producto in lista_de_marcas:
-#         if producto['nombre'] == producto_elegido:
-#             if cantidad > producto['stock']:
-#                 print(
-#                     f"\n El producto {producto['nombre']}, de la marca {producto['marca']}, no contamos con la cantidad que usted solicita")
-#             else:
-#                 producto_encontrado = list(filter(lambda x: x['nombre'] == producto_elegido, carrito_de_compras["productos"]))
-#                 if len(producto_encontrado) == 0:
-#                     producto_encontrado[0]['cantidad'] = cantidad
-#                     producto_encontrado[0]['precio'] = producto['precio'] * cantidad
-                    
-#                     carrito_de_compras['productos'].append(producto_encontrado[0])
-#                 else:
-#                     producto_encontrado[0]['cantidad'] += cantidad 
-#                     subtotal = producto_encontrado[0]['precio'] * cantidad
-#                     producto_encontrado[0]['subtotal'] += subtotal                  
-#                     carrito_de_compras['cantidad'] = actualizar_campo(carrito_de_compras, 'cantidad',) 
-#                     carrito_de_compras['total'] = actualizar_campo(carrito_de_compras, 'precio') 
-                                    
-                    
-#     return carrito_de_compras
-
-
-# def fx_2(marca_elegida: str, lista_principal: list[dict]):
-
-#     while True:
-#         lista_de_marcas = list(
-#             filter(lambda item: item['marca'] == marca_elegida, lista_principal))
-        
-#         if len(lista_de_marcas) == 0:
-#             print(f"No contamos con la marca {marca_elegida}")
-#             break
-
-#         print(
-#             f"\nContamos con los siguientes productos de la marca {marca_elegida}\n")
-
-#         for marca in lista_de_marcas:
-#             print(
-#                 f"\t────> {marca['nombre']} - ${marca['precio']:^5}, ")
-
-#         producto_elegido = pedir_texto("\nPor favor, ingrese el producto que desea : ",
-#                                        "Error de tipo, inténtelo nuevamente ")
-
-#         cantidad = pedir_numero((f"\n¿Del producto ♪ {producto_elegido} ♫, cuantos va a necesitar? "),
-#                                 "\nError de tipeo ingrese un numero por favor, gracias !")
-
-#         lista_de_compras = fx_3(lista_de_marcas, producto_elegido, cantidad)
-        
-#         print(lista_de_compras)
-
-#     return lista_de_compras
-
-
-# def fx_1(lista_principal: list[dict]):
-
-#     resp = "si"
-
-#     print("=========================================================\n"
-#           "        ♦ - Bienvenido al sector de compras  - ♦       \n"
-#           "=========================================================\n")
-
-#     while resp.lower() == "si":
-
-#         marca_elegida = pedir_texto("\nPor favor, ingrese la marca del producto: ",
-#                                     "Error de tipo, inténtelo nuevamente ").capitalize()
-
-#         lista = fx_2(marca_elegida, lista_principal)
-#         fx_4(lista)
-
-#         resp = input("\n¿ Desea comprar otro producto ? (si/no): ")
-#         while resp.lower() not in ["si", "no"]:
-#             resp = input("\nError, responda 'si' o 'no': ")
-
-
-# fx_1(lista)
