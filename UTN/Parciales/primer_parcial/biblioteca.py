@@ -3,7 +3,7 @@ import re
 import random
 import functools
 
-insumo_csv = ("Parciales/primer_parcial/insumos.csv")
+insumo_csv = ("primer_parcial/insumos.csv")
 system("cls")
 
 # ---------------------------------- F u n c i o n e s ------------------------------------------------
@@ -109,7 +109,6 @@ def fx_normalizar_datos(lista: str) -> list:
                 nombre = campos[1]
                 marca = campos[2].strip().capitalize()
                 precio = float(campos[3].replace('$', ''))
-                # stock = list(map(lambda _: random.randint(0, 10), range(5)))
                 caracteristicas = campos[4].split("|!*|")
                 insumo = {'id': id, 'nombre': nombre, 'marca': marca,
                           'precio': precio, 'caracteristicas': caracteristicas}
@@ -424,6 +423,7 @@ def fx_ejecutar_menu() -> int:
 
 
 # ------------------------- C o m p r a s  ---------------------------------------
+
 def fx_print_compras(lista_de_compras: list):
     """funcion que imprime por consola los productos.
 
@@ -440,6 +440,19 @@ def fx_print_compras(lista_de_compras: list):
             f"\tMarca: {producto_encontrado['marca']:^5}, producto: {producto_encontrado['Producto']:^5}, cantidad:{producto_encontrado['cantidad']:^3}, $:{producto_encontrado['precio']:^5} ")
 
     print(f"\nTotal - ${total}")
+
+    resp = input("\nDesea guardar la lista en un archivo txt? ")
+    if resp.lower() == 'si':
+        total = 0
+        with open("Parciales/primer_parcial/compras.txt", 'w') as archivo_txt:
+            archivo_txt.write("#------------------------------------------------------------#\n"
+                              "Factura hecha en archivo txt\n")
+
+            for producto_encontrado in lista_de_compras:
+                total += producto_encontrado['precio']
+                archivo_txt.write(
+                    f"\tMarca: {producto_encontrado['marca']:^5}, producto: {producto_encontrado['Producto']:^5}, cantidad:{producto_encontrado['cantidad']:^3}, $:{producto_encontrado['precio']:^5} ")
+                archivo_txt.write(f"\nTotal - ${total}")
 
 
 def fx_carrito_de_compras(lista_principal: list) -> list:
@@ -617,6 +630,46 @@ def opcion_5(lista: list, flag: bool) -> bool:
     limpiar_consola()
 
 
+def opcion_6(lista: list, flag: bool) -> bool:
+    """ funcion que contiene un conjunto de fx. 
+
+    Args:
+        lista (list) -> archivo csv pasado por argumento.
+        flag (bool) -> bandera para cambiar un estado.
+
+    """
+
+    system("cls")
+    if (flag):
+        fx_compras(lista)
+    else:
+        print("Por favor debe de cargan los datos desde el archivo\npara poder generar una orden de compras.")
+    limpiar_consola()
+
+
+def opcion_9(lista: list) -> list:
+    """ funcion que contiene un conjunto de fx. 
+
+    Args:
+        lista (list) -> archivo csv pasado por argumento.
+        flag (bool) -> bandera para cambiar un estado.
+
+    """
+
+    system("cls")
+
+    insumos = fx_actualizar_datos(lista)
+    insumos = fx_stock_disponible(insumos)
+
+    # with open("Parciales/primer_parcial/insumos.csv", "w") as archivo:
+    #     for linea in lista:
+    #         archivo.write(f"{linea}")
+
+    # fx_insumos_por_marca(archivo)
+    limpiar_consola()
+    return insumos
+
+
 # ----------------------- M e n ú   -   P r i n c i p a l  -----------------------
 
 
@@ -641,11 +694,8 @@ def app_insumos(insumos) -> None:
                 opcion_4(insumos, flag)
             case 5:
                 opcion_5(insumos, flag)
-            # case 6:
-            #     if(flag):
-            #         pass
-            #     else:
-            #         print("No se puede realizar compras si primero no se cargan los datos desde el archivo.")
+            case 6:
+                opcion_6(insumos, flag)
             # case 7:
             #     formato_exportacion = input("Seleccione el tipo de formato de exportación (csv/json): ")
             #     if formato_exportacion.lower() == 'csv':
@@ -660,21 +710,42 @@ def app_insumos(insumos) -> None:
 
             # case 8:
             #     leer_json()
-            # case 9:
-            #     if(flag):
-            #         actualizar_precios(insumos)
-            #     else:
-            #         print("No se puede actualizar precios si primero no se cargan los datos desde el archivo.")
+            case 9:
+                # insumos = opcion_9(insumo_csv)
+                pass
             # case 10:
             #     agregar_nuevo_producto()
             case 11:
                 system("cls")
                 print("Gracias por su visita, vuelva pronto ♥")
                 break
+
+
 # -------------------------------------------------------------------------------------------------------
 
 
-# app_insumos(insumo_csv)
+app_insumos(insumo_csv)
 
-lista = fx_normalizar_datos(insumo_csv)
-lista = fx_stock_disponible(lista)
+# lista = fx_normalizar_datos(insumo_csv)
+# lista = fx_stock_disponible(lista)
+
+# def actualizar_datos(lista: list):
+
+
+#     lista_con_aumento = list(
+#         map(lambda product: {**product, "precio": round(product["precio"] * 8.4, 2)}, lista))
+
+#     return lista_con_aumento
+
+
+# def guardar_archivo(lista: list,):
+
+#     with open("Parciales/primer_parcial/insumos.csv", "w",encoding = "utf-8") as file:
+#         writer = csv.DictWriter(file)
+#         writer.writerows(lista)
+#             # for linea in lista:
+#             #     file.write(f"{linea}\n")
+
+# lista_actualizada = actualizar_datos(lista)
+
+# guardar_archivo(lista_actualizada)

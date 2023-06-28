@@ -1,0 +1,5 @@
+#------------------------------------------------------------#
+Factura hecha en archivo txt
+	Marca: Apple, producto: Auriculares Inalámbricos, cantidad: 2 , $:319.98 
+Total - $319.98	Marca: Epson, producto: Escáner de Documentos, cantidad: 1 , $:249.99 
+Total - $569.97
