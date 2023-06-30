@@ -3,7 +3,7 @@ import re
 import random
 import functools
 
-insumo_csv = ("primer_parcial/insumos.csv")
+insumo_csv = ("parciales/primer_parcial/Insumos .csv")
 system("cls")
 
 # ---------------------------------- F u n c i o n e s ------------------------------------------------
@@ -424,7 +424,7 @@ def fx_ejecutar_menu() -> int:
 
 # ------------------------- C o m p r a s  ---------------------------------------
 
-def fx_print_compras(lista_de_compras: list):
+def fx_print_compras(lista_de_compras: dict):
     """funcion que imprime por consola los productos.
 
     Args:
@@ -434,7 +434,7 @@ def fx_print_compras(lista_de_compras: list):
 
     print("\nProductos ingresados")
 
-    for producto_encontrado in lista_de_compras:
+    for producto_encontrado in lista_de_compras.items():
         total += producto_encontrado['precio']
         print(
             f"\tMarca: {producto_encontrado['marca']:^5}, producto: {producto_encontrado['Producto']:^5}, cantidad:{producto_encontrado['cantidad']:^3}, $:{producto_encontrado['precio']:^5} ")
@@ -465,8 +465,8 @@ def fx_carrito_de_compras(lista_principal: list) -> list:
         lista_de_compras(list): lista con los productos.
     """
     resp = "si"
-    lista_de_compras = []
-    listado = []
+    lista_de_compras = {}
+    listado = {}
 
     while resp.lower() == "si":
 
@@ -486,31 +486,44 @@ def fx_carrito_de_compras(lista_principal: list) -> list:
 
         for marca in lista_de_marcas:
             print(
-                f"\t────> {marca['nombre']} - ${marca['precio']:^5}, ")
-
-        producto_elegido = pedir_texto("\nPor favor, ingrese el producto que desea : ",
+                f"\t────> (Id: {marca['id']}) - {marca['nombre']} - ${marca['precio']:^5}, ")
+            
+        id_del_producto = pedir_numero("\nPor favor, ingrese el id del producto que desea : ",
                                        "Error de tipo, inténtelo nuevamente ")
+        
+        producto_elegido = list(filter(lambda item: item['id'] == id_del_producto,lista_de_marcas ))
+        
 
-        cantidad = pedir_numero((f"\n¿Del producto ♪ {producto_elegido} ♫, cuantos va a necesitar? "),
-                                "\nError de tipeo ingrese un numero por favor, gracias !")
-
-        for producto in lista_de_marcas:
-            if producto['nombre'] == producto_elegido:
+        for producto in producto_elegido:
+            if producto['id'] in lista_de_compras:
+                
+                cantidad = pedir_numero((f"\n¿Su carrito cuenta con el {producto['nombre']} cuantos mas necesita? "),
+                                        "\nError de tipeo ingrese un numero por favor, gracias !")
                 if cantidad > producto['stock']:
                     print(
                         f"\n El producto {producto['nombre']}, de la marca {producto['marca']}, no contamos con la cantidad que usted solicita")
                 else:
-                    if producto_elegido in lista_de_compras:
-                        cantidad = pedir_numero((f"\n¿Su carrito cuenta con {producto_elegido} necesita mas? "),
-                                                "\nError de tipeo ingrese un numero por favor, gracias !")
-                    else:
+                    for item in lista_de_compras.values():
+                        item['cantidad'] += cantidad
+                        item['precio'] = (item['precio'] + (producto['precio'] * cantidad))
+            else:              
+                cantidad = pedir_numero((f"\n¿Cuantas unidades va a necesitar del producto  {producto['nombre']}? "),
+                                         "\nError de tipeo ingrese un numero por favor, gracias !")
+
+                if cantidad > producto['stock']:
+                    print(
+                        f"\n El producto {producto['nombre']}, de la marca {producto['marca']}, no contamos con la cantidad que usted solicita")
+                else:
                         precio = producto['precio']
                         producto['stock'] -= cantidad
-                        listado = {'marca': marca_elegida,
-                                   'Producto': producto_elegido,
+                        listado = {'marca': producto['marca'],
+                                   'Producto': producto['nombre'],
                                    'cantidad': cantidad,
                                    'precio': (cantidad * precio)}
-                        lista_de_compras.append(listado)
+                        lista_de_compras[producto['id']] = listado
+                        
+                for clave, valor in lista_de_compras.items():
+                    print(f"{clave}: {valor}")              
 
         resp = input("\n¿ Desea comprar otro producto ? (si/no): ")
         while resp.lower() not in ["si", "no"]:
@@ -658,7 +671,7 @@ def opcion_9(lista: list) -> list:
 
     system("cls")
 
-    insumos = fx_actualizar_datos(lista)
+    # insumos = fx_actualizar_datos(lista)
     insumos = fx_stock_disponible(insumos)
 
     # with open("Parciales/primer_parcial/insumos.csv", "w") as archivo:
