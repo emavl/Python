@@ -434,12 +434,12 @@ def fx_print_compras(lista_de_compras: dict):
 
     print("\nProductos ingresados")
 
-    for producto_encontrado in lista_de_compras.items():
+    for producto_encontrado in lista_de_compras.values():
         total += producto_encontrado['precio']
         print(
-            f"\tMarca: {producto_encontrado['marca']:^5}, producto: {producto_encontrado['Producto']:^5}, cantidad:{producto_encontrado['cantidad']:^3}, $:{producto_encontrado['precio']:^5} ")
+            f"\tMarca: {producto_encontrado['marca']:^5}, producto: {producto_encontrado['Producto']:^5}, cantidad:{producto_encontrado['cantidad']:^3}, $ {producto_encontrado['precio']:^5} ")
 
-    print(f"\nTotal - ${total}")
+    print(f"\nTotal - ${total:.2f}")
 
     resp = input("\nDesea guardar la lista en un archivo txt? ")
     if resp.lower() == 'si':
@@ -505,7 +505,7 @@ def fx_carrito_de_compras(lista_principal: list) -> list:
                 else:
                     for item in lista_de_compras.values():
                         item['cantidad'] += cantidad
-                        item['precio'] = (item['precio'] + (producto['precio'] * cantidad))
+                        item['precio'] = (item['precio'] + (producto['precio'] * cantidad) )
             else:              
                 cantidad = pedir_numero((f"\n¿Cuantas unidades va a necesitar del producto  {producto['nombre']}? "),
                                          "\nError de tipeo ingrese un numero por favor, gracias !")
