@@ -1,2 +1,4 @@
 #------------------------------------------------------------#
 Factura hecha en archivo txt
+	Marca:  Lg  , producto: Smart TV LG OLED, cantidad: 2 , $:2999.98 
+Total - $2999.98
