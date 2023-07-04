@@ -490,7 +490,7 @@ def fx_ejecutar_menu() -> int:
     return opcion
 
 
-# ------------------------- C o m p r a s  ---------------------------------------
+# ------------------------- C o m p r a s    y    P r o d u c t o    N u e v o   ---------------------------------------
 
 def fx_guardado_txt(lista_de_compras: dict):
     
@@ -640,6 +640,33 @@ def fx_carrito_de_compras(lista_principal: list) -> list:
             fx_guardado_txt(lista_de_compras)
     
 
+def fx_nuevo_producto(lista: list[dict]):
+    
+    caracteristicas = []
+    print("#-----------------------------------------#\n"
+          "|             Nuevo producto !!           |\n"
+          "#-----------------------------------------#")
+    
+        
+    nuevo_producto = {
+        'id': len(lista) + 1,
+        'nombre': pedir_texto('\nIngrese el nombre del producto: ','error de tipeo'),
+        'marca': pedir_texto('\nIngrese el nombre de la marca: ','error de tipeo'),
+        'precio': input('\nIngrese el precio por favor: '),
+        'caracteristicas': caracteristicas,
+        'stock': random.randint(1, 10)
+    }
+    print("Ingrese las características (entre 1 y 3):")
+    while len(caracteristicas) < 3:
+        caracteristica = input(f"Característica {len(caracteristicas) + 1}: ")
+        if caracteristica:
+            caracteristicas.append(caracteristica)
+        else:
+            break
+        
+    
+    lista.append(nuevo_producto)
+    print("El nuevo producto ha sido agregado.")
 
 
 # --------------- F u n c i o n e s     s i m p l e s -------------------
@@ -807,6 +834,23 @@ def opcion_9(lista: list, flag: bool) -> list:
     limpiar_consola()
 
 
+
+def opcion_10(lista: list, flag: bool) -> list:
+    """ funcion que contiene un conjunto de fx. 
+
+    Args:
+        lista (list) -> archivo csv pasado por argumento.
+        flag (bool) -> bandera para cambiar un estado.
+
+    """
+
+    system("cls")
+    if (flag):
+        fx_nuevo_producto(lista)
+    else:
+        print("Por favor debe de cargan los datos desde el archivo\npara poder agregar un nuevo producto.")
+    limpiar_consola()
+    
 # ----------------------- M e n ú   -   P r i n c i p a l  -----------------------
 
 
@@ -844,7 +888,9 @@ def app_insumos(insumos) -> None:
                 opcion_8(insumos, flag)
             case 9: 
                 opcion_9(insumos, flag)
-            case 10:
+            case 10: 
+                opcion_10(insumos, flag)
+            case 11:
                 system("cls")
                 print("Gracias por su visita, vuelva pronto ♥")
                 break
@@ -852,12 +898,9 @@ def app_insumos(insumos) -> None:
 # -------------------------------------------------------------------------------------------------------
 
 
-# app_insumos(insumo_csv)
-
-# lista = fx_normalizar_datos(insumo_csv)
-# lista = fx_stock_disponible(lista)
-
    
+
+
 
     
     
