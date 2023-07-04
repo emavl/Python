@@ -1,5 +1,5 @@
 from os import system
-import re, random, json
+import re, random, json, csv
 
 insumo_csv = ("parciales/primer_parcial/Insumos .csv")
 system("cls")
@@ -157,6 +157,36 @@ def leer_json():
         caracteristicas = ", ".join(insumo_json['caracteristicas'])
         print(f"|{(insumo_json['id']):>4}|{(insumo_json['nombre']):^40}|{(insumo_json['marca']):^20}|${(insumo_json['precio']):>9}| {(caracteristicas):^94}|")
     print(f"─"*175)
+
+
+def fx_guardar_csv(Lista: list):
+    
+
+    with open("parciales/primer_parcial/insumos_actualizados.csv", 'w', encoding="utf-8") as archivo_csv:
+        writer = csv.writer(archivo_csv)
+        writer.writerow(['Id', 'Nombre', 'Marca', 'Pecio', 'Caracteristicas', 'Stock'])
+        for insumo in Lista:
+            caracteristicas = ", ".join(insumo['Caracteristicas'])
+            writer.writerow([insumo.get('Id'), insumo.get('Nombre'), insumo.get('Marca'), insumo.get('Precio'), caracteristicas , insumo.get('Stock')])
+
+    print(
+        f"Se han guardado los datos en el archivo correctamente.")
+    
+ 
+def fx_actualizar_precios(lista: list):
+
+    insumos = list(map(lambda insumo: {
+                                        'Id': insumo.get('id'),
+                                        'Nombre': insumo.get('nombre'),
+                                        'Marca': insumo.get('marca'),
+                                        'Precio': round(float(insumo.get('precio')) * 1.084, 2),
+                                        'Caracteristicas': insumo.get('caracteristicas'),
+                                        'Stock': insumo.get('stock')
+                                    }, lista))
+    
+    print("\nLos precios sen actualizaron correctamente.")    
+    return insumos
+
 
 # --------------- Fx aplicadas a los insumos ----------------
 
@@ -759,7 +789,7 @@ def opcion_8(lista: list, flag: bool) -> bool:
     limpiar_consola()
    
     
-def opcion_9(lista: list) -> list:
+def opcion_9(lista: list, flag: bool) -> list:
     """ funcion que contiene un conjunto de fx. 
 
     Args:
@@ -769,17 +799,12 @@ def opcion_9(lista: list) -> list:
     """
 
     system("cls")
-
-    # insumos = fx_actualizar_datos(lista)
-    insumos = fx_stock_disponible(insumos)
-
-    # with open("Parciales/primer_parcial/insumos.csv", "w") as archivo:
-    #     for linea in lista:
-    #         archivo.write(f"{linea}")
-
-    # fx_insumos_por_marca(archivo)
+    if (flag):
+        insumos = fx_actualizar_precios(lista)
+        fx_guardar_csv(insumos)
+    else:
+        print("Por favor debe de cargan los datos desde el archivo\npara poder leer el archivo json.")
     limpiar_consola()
-    return insumos
 
 
 # ----------------------- M e n ú   -   P r i n c i p a l  -----------------------
@@ -817,11 +842,9 @@ def app_insumos(insumos) -> None:
                 opcion_7(insumos, flag)
             case 8:
                 opcion_8(insumos, flag)
-            case 9:
-                pass
-            # case 10:
-            #     agregar_nuevo_producto()
-            case 11:
+            case 9: 
+                opcion_9(insumos, flag)
+            case 10:
                 system("cls")
                 print("Gracias por su visita, vuelva pronto ♥")
                 break
@@ -831,37 +854,10 @@ def app_insumos(insumos) -> None:
 
 # app_insumos(insumo_csv)
 
-lista = fx_normalizar_datos(insumo_csv)
-lista = fx_stock_disponible(lista)
+# lista = fx_normalizar_datos(insumo_csv)
+# lista = fx_stock_disponible(lista)
 
    
-def guardar_csv(insumos):
-    nombre_archivo = input(
-        "Ingrese el nombre del archivo para guardar los datos (incluya la extensión .csv): ")
-    if not nombre_archivo.lower().endswith('.csv'):
-        print("El archivo debe tener extensión .csv.")
-        return
 
-    with open(nombre_archivo, 'w', encoding="utf-8") as archivo_csv:
-        writer = csv.writer(archivo_csv)
-        writer.writerow(['ID', 'NOMBRE', 'MARCA', 'PRECIO', 'CARACTERISTICAS'])
-        for insumo in insumos:
-            caracteristicas = insumo[4]
-            writer.writerow([insumo[0], insumo[1], insumo[2],
-                            insumo[3], caracteristicas])
-
-    print(
-        f"Se han guardado los datos en el archivo {nombre_archivo} correctamente.")
     
- 
-def actualizar_precios(insumos):
-
-    insumos = list(map(lambda insumo: {
-        'ID': insumo[0],
-        'NOMBRE': insumo[1],
-        'MARCA': insumo[2],
-        'PRECIO': round(float(insumo[3].replace("$", "")) * 1.084, 2),
-        'CARACTERISTICAS': insumo[4]
-    }, insumos))
-    guardar_csv(insumos)
-    print("Se han actualizado los precios correctamente.")    
+    
